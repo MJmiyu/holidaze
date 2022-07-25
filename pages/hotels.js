@@ -27,7 +27,10 @@ const Hotels = () => {
       Hotels
       {hotels.map((hotel) => {
         return (
-          <Link href={{ pathname: 'hotel/[id]', query: { id: hotel.id } }}>
+          <Link
+            key={hotel.id}
+            href={{ pathname: 'hotel/[id]', query: { id: hotel.id } }}
+          >
             {hotel.name}
           </Link>
         );
