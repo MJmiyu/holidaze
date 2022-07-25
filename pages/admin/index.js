@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import styles from '../styles/admin/Login.module.css';
+import styles from '../../styles/admin/Login.module.css';
 
 const Login = () => {
   return (
