@@ -1,8 +1,9 @@
 import Head from 'next/head';
+import styles from '../styles/Contact.module.css';
 import Nav from '../components/Nav';
-import styles from '../styles/Home.module.css';
+import ContactForm from '../components/ContactForm';
 
-const Home = () => {
+const Contact = () => {
   return (
     <div className={styles.container}>
       <Head>
@@ -11,9 +12,10 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Nav />
-      HOLIDAZE
+      Contact
+      <ContactForm />
     </div>
   );
 };
 
-export default Home;
+export default Contact;
