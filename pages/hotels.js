@@ -1,9 +1,9 @@
-import Head from 'next/head';
 import Link from 'next/link';
 import styles from '../styles/Hotels.module.css';
 import Nav from '../components/Nav';
 import useSWR from 'swr';
 import fetcher from '../swrFetcher';
+import { HolidazeHead } from '../components/Head';
 
 const Hotels = () => {
   const { data: hotels, error } = useSWR('/api/hotels', fetcher);
@@ -18,11 +18,7 @@ const Hotels = () => {
 
   return (
     <div className={styles.container}>
-      <Head>
-        <title>Holidaze</title>
-        <meta name="description" content="Hotels in Bergen" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <HolidazeHead />
       <Nav />
       Hotels
       {hotels.map((hotel) => {

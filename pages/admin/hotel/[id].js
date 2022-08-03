@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
-import styles from '../../styles/Hotel.module.css';
-import Nav from '../../components/Nav';
-import fetcher from '../../swrFetcher';
+import styles from '../../../styles/Hotel.module.css';
+import Nav from '../../../components/Nav';
+import fetcher from '../../../swrFetcher';
 import useSWR from 'swr';
-import { HolidazeHead } from '../../components/Head';
+import { HolidazeAdminHead } from '../../../components/Head';
 
-const Hotel = () => {
+const EditHotel = () => {
   const router = useRouter();
   const { id } = router.query;
 
@@ -21,7 +21,7 @@ const Hotel = () => {
 
   return (
     <div className={styles.container}>
-      <HolidazeHead />
+      <HolidazeAdminHead />
       <Nav />
       Hotel with id : {hotel.id}
       Name: {hotel.name}
@@ -32,4 +32,4 @@ const Hotel = () => {
   );
 };
 
-export default Hotel;
+export default EditHotel;
