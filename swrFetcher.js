@@ -1,7 +1,15 @@
-const fetcher = async (url) => {
-  const res = await fetch(url);
-  const json = await res.json();
+export const fetcher = async (url) => {
+  const result = await fetch(url);
+  const json = await result.json();
   return json;
 };
 
-export default fetcher;
+export const authenticatedFetcher = (jwt) => async (url) => {
+  const result = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  });
+  const json = await result.json();
+  return json;
+};

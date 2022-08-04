@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import styles from '../../styles/Hotels.module.css';
 import useSWR from 'swr';
-import fetcher from '../../swrFetcher';
+import { fetcher } from '../../swrFetcher';
 import { HolidazeAdminHead } from '../../components/Head';
 import Nav from '../../components/Nav';
 

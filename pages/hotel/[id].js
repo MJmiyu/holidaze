@@ -1,17 +1,18 @@
 import { useRouter } from 'next/router';
 import styles from '../../styles/Hotel.module.css';
 import Nav from '../../components/Nav';
-import fetcher from '../../swrFetcher';
+import { fetcher } from '../../swrFetcher';
 import useSWR from 'swr';
 import { HolidazeHead } from '../../components/Head';
+import { STRAPI_URL } from '../../constants/strapi';
 
 const Hotel = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const { data: hotel, error } = useSWR('/api/hotel/' + id, fetcher);
+  const { data, error } = useSWR(STRAPI_URL + 'hotels/' + id, fetcher);
 
-  if (!hotel) {
+  if (!data) {
     return <div>Loading</div>;
   }
 
@@ -19,15 +20,19 @@ const Hotel = () => {
     return <div>Failed to load hotel</div>;
   }
 
+  const {
+    attributes: { name, description, address, price },
+  } = data.data;
+
   return (
     <div className={styles.container}>
       <HolidazeHead />
       <Nav />
-      Hotel with id : {hotel.id}
-      Name: {hotel.name}
-      Description: {hotel.description}
-      Address: {hotel.address}
-      Price: {hotel.price}
+      Hotel with id : {id}
+      Name: {name}
+      Description: {description}
+      Address: {address}
+      Price: {price}
     </div>
   );
 };

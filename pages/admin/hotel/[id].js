@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import styles from '../../../styles/Hotel.module.css';
 import Nav from '../../../components/Nav';
-import fetcher from '../../../swrFetcher';
+import { fetcher } from '../../../swrFetcher';
 import useSWR from 'swr';
 import { HolidazeAdminHead } from '../../../components/Head';
 
