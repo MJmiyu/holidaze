@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }) => {
   const authFetcher = useCallback(
     async (url) => {
       try {
-        const result = await fetch(STRAPI_URL + 'admin/' + url, {
+        const result = await fetch(STRAPI_URL + url, {
           headers: {
             Authorization: `Bearer ${jwt}`,
           },
@@ -73,10 +73,6 @@ export const AuthProvider = ({ children }) => {
 
         if (result.status === 403 || result.status === 401) {
           router.push('/admin');
-        }
-
-        if (result.status !== 200) {
-          throw new Error(url, 'recevied HTTP ' + result.status);
         }
 
         const json = await result.json();
