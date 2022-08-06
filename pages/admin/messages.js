@@ -1,17 +1,12 @@
 import useSWR from 'swr';
 import { HolidazeAdminHead } from '../../components/Head';
-import { STRAPI_URL } from '../../constants/strapi';
 import styles from '../../styles/Common.module.css';
-import { authenticatedFetcher } from '../../swrFetcher';
 import { useAuth } from '../../util/AuthContext';
 
 const Messages = () => {
-  const { jwt } = useAuth();
+  const { authFetcher } = useAuth();
 
-  const { data, error } = useSWR(
-    STRAPI_URL + 'messages',
-    authenticatedFetcher(jwt)
-  );
+  const { data, error } = useSWR('messages', authFetcher);
 
   if (!data) {
     return <div>Loading</div>;
@@ -29,7 +24,7 @@ const Messages = () => {
 
       {messages.map((message) => {
         return (
-          <div>
+          <div key={message.id}>
             <div>{message.name}</div>
             <div>{message.email}</div>
             <div>{message.subject}</div>

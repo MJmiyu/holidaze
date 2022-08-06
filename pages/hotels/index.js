@@ -1,13 +1,14 @@
 import Link from 'next/link';
-import styles from '../styles/Hotels.module.css';
-import Nav from '../components/Nav';
+import styles from '../../styles/Hotels.module.css';
 import useSWR from 'swr';
-import { fetcher } from '../swrFetcher';
-import { HolidazeHead } from '../components/Head';
-import { STRAPI_URL } from '../constants/strapi';
+import { useFetcher } from '../../util/FetcherContext';
+import { HolidazeHead } from '../../components/Head';
+import Nav from '../../components/Nav';
 
 const Hotels = () => {
-  const { data, error } = useSWR(STRAPI_URL + 'hotels', fetcher);
+  const fetcher = useFetcher();
+
+  const { data, error } = useSWR('hotels', fetcher);
 
   if (!data) {
     return <div>Loading</div>;
@@ -31,7 +32,7 @@ const Hotels = () => {
         } = hotel;
 
         return (
-          <Link key={id} href={{ pathname: 'hotel/[id]', query: { id } }}>
+          <Link key={id} href={{ pathname: 'hotels/[id]', query: { id } }}>
             {name}
           </Link>
         );

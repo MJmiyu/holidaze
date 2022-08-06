@@ -1,20 +1,23 @@
 import Link from 'next/link';
-import styles from '../../styles/Hotels.module.css';
+import styles from '../../../styles/Hotels.module.css';
 import useSWR from 'swr';
-import { fetcher } from '../../swrFetcher';
-import { HolidazeAdminHead } from '../../components/Head';
-import Nav from '../../components/Nav';
+import { HolidazeAdminHead } from '../../../components/Head';
+import Nav from '../../../components/Nav';
+import { useFetcher } from '../../../util/FetcherContext';
 
 const Hotels = () => {
-  const { data: hotels, error } = useSWR('/api/hotels', fetcher);
+  const fetcher = useFetcher();
 
-  if (!hotels) {
+  const { data, error } = useSWR('hotels', fetcher);
+
+  if (!data) {
     return <div>Loading</div>;
   }
 
   if (error) {
     return <div>Failed to load hotels</div>;
   }
+  const hotels = data.data;
 
   return (
     <div className={styles.container}>
@@ -25,9 +28,9 @@ const Hotels = () => {
         return (
           <Link
             key={hotel.id}
-            href={{ pathname: 'admin/hotel/[id]', query: { id: hotel.id } }}
+            href={{ pathname: '/admin/hotels/[id]', query: { id: hotel.id } }}
           >
-            {hotel.name}
+            {hotel.attributes.name}
           </Link>
         );
       })}

@@ -1,15 +1,17 @@
 import { useRouter } from 'next/router';
 import styles from '../../../styles/Hotel.module.css';
 import Nav from '../../../components/Nav';
-import { fetcher } from '../../../swrFetcher';
 import useSWR from 'swr';
 import { HolidazeAdminHead } from '../../../components/Head';
+import { useFetcher } from '../../../util/FetcherContext';
 
 const EditHotel = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const { data: hotel, error } = useSWR('/api/hotel/' + id, fetcher);
+  const fetcher = useFetcher();
+
+  const { data: hotel, error } = useSWR('hotels/' + id, fetcher);
 
   if (!hotel) {
     return <div>Loading</div>;
