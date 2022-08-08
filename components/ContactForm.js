@@ -28,9 +28,9 @@ const ContactForm = () => {
 
   const onSubmit = useCallback(
     async (data) => {
-      const success = await post('messages', data);
+      const result = await post('messages', data);
 
-      if (!success) {
+      if (!result) {
         console.error('Failed sending messages');
       }
     },

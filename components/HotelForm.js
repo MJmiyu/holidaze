@@ -1,9 +1,11 @@
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import styles from './HotelForm.module.css';
 import { useAuthAPI } from '../util/AuthAPIContext';
+import { useRouter } from 'next/router';
+import UploadImage from './UploadImage';
 
 const schema = yup.object().shape({
   name: yup.string().required('Enter the hotel name'),
@@ -17,7 +19,11 @@ const schema = yup.object().shape({
 });
 
 const HotelForm = ({ hotel }) => {
+  const [file, setFile] = useState();
+
   const editing = !!hotel;
+
+  const router = useRouter();
 
   const {
     register,
@@ -33,27 +39,43 @@ const HotelForm = ({ hotel }) => {
     },
   });
 
-  const { authPost, authPut } = useAuthAPI();
+  const { authPost, authPut, uploadImage, deleteImage } = useAuthAPI();
 
   const onSubmit = useCallback(
     async (data) => {
       if (editing) {
-        const success = await authPut('hotels', hotel.id, data);
+        const result = await authPut('hotels', hotel.id, data);
 
-        if (success) {
+        if (result) {
+          if (file) {
+            const success = await uploadImage(file, hotel.id);
+
+            if (success && hotel.attributes.image.data) {
+              await deleteImage(hotel.attributes.image.data.id);
+            }
+          }
+
           window.location.reload();
         } else {
           console.error('Failed creating hotel');
         }
       } else {
-        const success = await authPost('hotels', data);
+        const result = await authPost('hotels', data);
 
-        if (!success) {
+        if (result) {
+          const hotelId = result.data.id;
+
+          if (file) {
+            await uploadImage(file, hotelId);
+          }
+
+          router.push('/admin/hotels/' + hotelId);
+        } else {
           console.error('Failed creating hotel');
         }
       }
     },
-    [editing, hotel, authPost, authPut]
+    [editing, hotel, authPost, authPut, file]
   );
 
   return (
@@ -76,6 +98,11 @@ const HotelForm = ({ hotel }) => {
 
         <button>Submit</button>
       </form>
+
+      <UploadImage
+        image={editing ? hotel.attributes.image.data : undefined}
+        setFile={setFile}
+      />
     </>
   );
 };

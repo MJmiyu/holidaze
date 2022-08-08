@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router';
 import { createContext, useCallback, useContext, useState } from 'react';
-import { STRAPI_URL } from '../constants/strapi';
+import { STRAPI_API_URL } from '../constants/strapi';
 import { isLocal } from './isLocal';
+import urlJoin from 'url-join';
 
 const LOCAL_STORAGE_JWT_KEY = 'HOLIDAZE_JWT';
 
@@ -27,7 +28,7 @@ export const AuthAPIProvider = ({ children }) => {
     async (username, password) => {
       try {
         const body = JSON.stringify({ identifier: username, password });
-        const response = await fetch(STRAPI_URL + 'auth/local', {
+        const response = await fetch(urlJoin(STRAPI_API_URL, 'auth/local'), {
           method: 'POST',
           body,
           headers: {
@@ -61,12 +62,15 @@ export const AuthAPIProvider = ({ children }) => {
   const authGet = useCallback(
     async (url) => {
       try {
-        const response = await fetch(STRAPI_URL + url, {
-          headers: {
-            Authorization: `Bearer ${jwt}`,
-            Accept: 'application/json',
-          },
-        });
+        const response = await fetch(
+          urlJoin(STRAPI_API_URL, url, '?' + STRAPI_POPULATE_PARAMS),
+          {
+            headers: {
+              Authorization: `Bearer ${jwt}`,
+              Accept: 'application/json',
+            },
+          }
+        );
 
         if (response.status === 404) {
           router.push('/');
@@ -90,11 +94,12 @@ export const AuthAPIProvider = ({ children }) => {
       try {
         const body = JSON.stringify({ data });
 
-        const response = await fetch(STRAPI_URL + url, {
+        const response = await fetch(urlJoin(STRAPI_API_URL, url), {
           method: 'POST',
           body,
           headers: {
             'Content-Type': 'application/json',
+            Accept: 'application/json',
             Authorization: `Bearer ${jwt}`,
           },
         });
@@ -103,10 +108,10 @@ export const AuthAPIProvider = ({ children }) => {
           router.push('/admin');
         }
 
-        return true;
+        const json = await response.json();
+        return json;
       } catch (e) {
         console.error(e);
-        return false;
       }
     },
     [router, jwt]
@@ -117,33 +122,74 @@ export const AuthAPIProvider = ({ children }) => {
       try {
         const body = JSON.stringify({ data });
 
-        const response = await fetch(STRAPI_URL + url + '/' + id, {
-          method: 'PUT',
-          body,
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${jwt}`,
-          },
-        });
+        const response = await fetch(
+          urlJoin(STRAPI_API_URL, url, id.toString()),
+          {
+            method: 'PUT',
+            body,
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+              Authorization: `Bearer ${jwt}`,
+            },
+          }
+        );
 
         if (response.status === 403 || response.status === 401) {
           router.push('/admin');
         }
 
-        return true;
+        const json = await response.json();
+        return json;
       } catch (e) {
         console.error(e);
-        return false;
       }
     },
     [router, jwt]
   );
+
+  const uploadImage = useCallback(
+    async (image, id) => {
+      const form = new FormData();
+      form.append('files', image);
+      form.append('ref', 'api::hotel.hotel');
+      form.append('refId', id);
+      form.append('field', 'image');
+
+      const response = await fetch(urlJoin(STRAPI_API_URL, 'upload'), {
+        method: 'POST',
+        body: form,
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
+
+      return response.status === 200;
+    },
+    [jwt]
+  );
+
+  const deleteImage = useCallback(async (imageId) => {
+    const response = await fetch(
+      urlJoin(STRAPI_API_URL, 'upload/files', imageId.toString()),
+      {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      }
+    );
+
+    return response.status === 200;
+  }, []);
 
   const contextValue = {
     login,
     authGet,
     authPost,
     authPut,
+    uploadImage,
+    deleteImage,
   };
 
   return (

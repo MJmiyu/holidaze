@@ -12,18 +12,20 @@ const Search = () => {
 
   useEffect(() => {
     const timer = setTimeout(async () => {
-      const currentQuery = query;
+      if (query.length > 1) {
+        const currentQuery = query;
 
-      const filters = {
-        name: {
-          $containsi: query,
-        },
-      };
+        const filters = {
+          name: {
+            $containsi: query,
+          },
+        };
 
-      const result = await get('hotels?' + qs.stringify({ filters }));
+        const result = await get('hotels?' + qs.stringify({ filters }));
 
-      if (currentQuery === query) {
-        setHotels(result.data);
+        if (currentQuery === query) {
+          setHotels(result.data);
+        }
       }
     }, 300);
 

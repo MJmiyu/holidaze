@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { createContext, useCallback, useContext } from 'react';
-import { STRAPI_URL } from '../constants/strapi';
+import { STRAPI_POPULATE_PARAMS, STRAPI_API_URL } from '../constants/strapi';
+import urlJoin from 'url-join';
 
 const APIContext = createContext(async () => {});
 
@@ -10,7 +11,9 @@ export const APIProvider = ({ children }) => {
   const get = useCallback(
     async (url) => {
       try {
-        const response = await fetch(STRAPI_URL + url);
+        const response = await fetch(
+          urlJoin(STRAPI_API_URL, url, '?' + STRAPI_POPULATE_PARAMS)
+        );
 
         if (response.status === 404) {
           router.push('/');
@@ -29,11 +32,12 @@ export const APIProvider = ({ children }) => {
     try {
       const body = JSON.stringify({ data });
 
-      const response = await fetch(STRAPI_URL + url, {
+      const response = await fetch(urlJoin(STRAPI_API_URL, url), {
         method: 'POST',
         body,
         headers: {
           'Content-Type': 'application/json',
+          Accept: 'application/json',
         },
       });
 
@@ -45,10 +49,10 @@ export const APIProvider = ({ children }) => {
         );
       }
 
-      return true;
+      const json = await response.json();
+      return json;
     } catch (e) {
       console.error(e);
-      return false;
     }
   });
 

@@ -6,6 +6,9 @@ import { HolidazeHead } from '../../components/Head';
 import { useAPI } from '../../util/APIContext';
 import { useState } from 'react';
 import BookHotelForm from '../../components/BookHotelForm';
+import { STRAPI_URL } from '../../constants/strapi';
+import urlJoin from 'url-join';
+import Image from 'next/image';
 
 const Hotel = () => {
   const [showModal, setShowModal] = useState(false);
@@ -28,8 +31,10 @@ const Hotel = () => {
   const hotel = data.data;
 
   const {
-    attributes: { name, description, address, price },
+    attributes: { name, description, address, price, image },
   } = hotel;
+
+  const imageUrl = image.data ? image.data.attributes.url : null;
 
   return (
     <div className={styles.container}>
@@ -40,6 +45,13 @@ const Hotel = () => {
       Description: {description}
       Address: {address}
       Price: {price}
+      {imageUrl && (
+        <Image
+          src={urlJoin(STRAPI_URL, image.data.attributes.url)}
+          width={300}
+          height={200}
+        />
+      )}
       <button onClick={() => setShowModal(true)}>Book room</button>
       {showModal && (
         <>

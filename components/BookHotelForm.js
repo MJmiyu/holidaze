@@ -7,6 +7,10 @@ import { useAPI } from '../util/APIContext';
 import { format, addDays, differenceInDays, isAfter } from 'date-fns';
 
 const schema = yup.object().shape({
+  email: yup
+    .string()
+    .required('Enter an email address')
+    .email('Enter a valid email address'),
   fromDate: yup.date().required('Enter when you are booking from'),
   toDate: yup.date().required('Enter when you are booking to'),
   rooms: yup.number().required('Enter the number of rooms your are booking'),
@@ -36,6 +40,7 @@ const BookHotelForm = ({
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
+      email: '',
       fromDate: today(),
       toDate: tomorrow(),
       rooms: 1,
@@ -47,7 +52,7 @@ const BookHotelForm = ({
   const bookingPrice = useMemo(() => {
     const days = differenceInDays(new Date(toDate), new Date(fromDate));
     return days * price;
-  }, [fromDate, toDate, rooms]);
+  }, [fromDate, toDate, rooms, price]);
 
   const isToDateAfterFromDate = useMemo(() => {
     return isAfter(new Date(toDate), new Date(fromDate));
@@ -57,9 +62,9 @@ const BookHotelForm = ({
 
   const onSubmit = useCallback(
     async (data) => {
-      const success = await post('bookings', data);
+      const result = await post('bookings', data);
 
-      if (!success) {
+      if (!result) {
         console.error('Failed sending messages');
       }
     },
@@ -68,6 +73,9 @@ const BookHotelForm = ({
 
   return (
     <form className={styles.Form} onSubmit={handleSubmit(onSubmit)}>
+      {errors.email && <span>{errors.email.message}</span>}
+      <input placeholder="Email" {...register('email')} />
+
       {errors.fromDate && <span>{errors.fromDate.message}</span>}
       <input type="date" placeholder="From" {...register('fromDate')} />
 
