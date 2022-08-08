@@ -1,14 +1,14 @@
 import Link from 'next/link';
 import styles from '../../styles/Hotels.module.css';
 import useSWR from 'swr';
-import { useFetcher } from '../../util/FetcherContext';
+import { useAPI } from '../../util/APIContext';
 import { HolidazeHead } from '../../components/Head';
 import Nav from '../../components/Nav';
 
 const Hotels = () => {
-  const fetcher = useFetcher();
+  const { get } = useAPI();
 
-  const { data, error } = useSWR('hotels', fetcher);
+  const { data, error } = useSWR('hotels', get);
 
   if (!data) {
     return <div>Loading</div>;

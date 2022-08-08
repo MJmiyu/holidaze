@@ -1,12 +1,12 @@
 import useSWR from 'swr';
 import { HolidazeAdminHead } from '../../components/Head';
 import styles from '../../styles/Common.module.css';
-import { useAuth } from '../../util/AuthContext';
+import { useAuthAPI } from '../../util/AuthAPIContext';
 
 const Messages = () => {
-  const { authFetcher } = useAuth();
+  const { authGet } = useAuthAPI();
 
-  const { data, error } = useSWR('messages', authFetcher);
+  const { data, error } = useSWR('messages', authGet);
 
   if (!data) {
     return <div>Loading</div>;
@@ -25,10 +25,10 @@ const Messages = () => {
       {messages.map((message) => {
         return (
           <div key={message.id}>
-            <div>{message.name}</div>
-            <div>{message.email}</div>
-            <div>{message.subject}</div>
-            <div>{message.message}</div>
+            <div>{message.attributes.name}</div>
+            <div>{message.attributes.email}</div>
+            <div>{message.attributes.subject}</div>
+            <div>{message.attributes.message}</div>
           </div>
         );
       })}

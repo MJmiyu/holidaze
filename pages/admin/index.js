@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { useAuth } from '../../util/AuthContext';
+import { useAuthAPI } from '../../util/AuthAPIContext';
 
 const schema = yup.object().shape({
   username: yup.string().required('Enter your username or email'),
@@ -13,7 +13,7 @@ const schema = yup.object().shape({
 });
 
 const LoginPage = () => {
-  const { login } = useAuth();
+  const { login } = useAuthAPI();
 
   const {
     register,

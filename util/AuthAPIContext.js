@@ -16,9 +16,9 @@ const storeJwt = (jwt) => {
   localStorage.setItem(LOCAL_STORAGE_JWT_KEY, jwt);
 };
 
-const AuthContext = createContext({});
+const AuthAPIContext = createContext({});
 
-export const AuthProvider = ({ children }) => {
+export const AuthAPIProvider = ({ children }) => {
   const [jwt, setJwt] = useState(getJwt());
 
   const router = useRouter();
@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }) => {
     [router]
   );
 
-  const authFetcher = useCallback(
+  const authGet = useCallback(
     async (url) => {
       try {
         const result = await fetch(STRAPI_URL + url, {
@@ -84,11 +84,16 @@ export const AuthProvider = ({ children }) => {
     [router]
   );
 
+  const contextValue = {
+    authGet,
+    login,
+  };
+
   return (
-    <AuthContext.Provider value={{ authFetcher, login }}>
+    <AuthAPIContext.Provider value={contextValue}>
       {children}
-    </AuthContext.Provider>
+    </AuthAPIContext.Provider>
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuthAPI = () => useContext(AuthAPIContext);

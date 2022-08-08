@@ -3,15 +3,15 @@ import styles from '../../../styles/Hotel.module.css';
 import Nav from '../../../components/Nav';
 import useSWR from 'swr';
 import { HolidazeAdminHead } from '../../../components/Head';
-import { useFetcher } from '../../../util/FetcherContext';
+import { useAPI } from '../../../util/APIContext';
 
 const EditHotel = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const fetcher = useFetcher();
+  const { get } = useAPI();
 
-  const { data: hotel, error } = useSWR('hotels/' + id, fetcher);
+  const { data: hotel, error } = useSWR('hotels/' + id, get);
 
   if (!hotel) {
     return <div>Loading</div>;

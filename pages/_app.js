@@ -1,14 +1,14 @@
 import '../styles/globals.css';
-import { AuthProvider } from '../util/AuthContext';
-import { FetcherProvider } from '../util/FetcherContext';
+import { AuthAPIProvider } from '../util/AuthAPIContext';
+import { APIProvider } from '../util/APIContext';
 
 const Holidaze = ({ Component, pageProps }) => {
   return (
-    <FetcherProvider>
-      <AuthProvider>
+    <APIProvider>
+      <AuthAPIProvider>
         <Component {...pageProps} />
-      </AuthProvider>
-    </FetcherProvider>
+      </AuthAPIProvider>
+    </APIProvider>
   );
 };
 

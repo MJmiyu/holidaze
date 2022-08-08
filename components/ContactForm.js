@@ -1,11 +1,12 @@
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import styles from './ContactForm.module.css';
+import { useAPI } from '../util/APIContext';
 
 const schema = yup.object().shape({
-  name: yup.string().required('Enter your first name here'),
+  name: yup.string().required('Enter your name here'),
   email: yup
     .string()
     .required('Enter an email address')
@@ -15,8 +16,6 @@ const schema = yup.object().shape({
 });
 
 const ContactForm = () => {
-  const [submitted, setSubmitted] = useState(false);
-
   const {
     register,
     handleSubmit,
@@ -25,18 +24,24 @@ const ContactForm = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = useCallback((data) => {
-    setSubmitted(true);
-    console.log(data);
-  }, []);
+  const { post } = useAPI();
+
+  const onSubmit = useCallback(
+    async (data) => {
+      const success = await post('messages', data);
+
+      if (!success) {
+        console.error('Failed sending messages');
+      }
+    },
+    [post]
+  );
 
   return (
     <>
-      {submitted && <div>Submitted successfully</div>}
-
       <form className={styles.Form} onSubmit={handleSubmit(onSubmit)}>
         {errors.name && <span>{errors.name.message}</span>}
-        <input placeholder="Enter your name here" {...register('firstName')} />
+        <input placeholder="Enter your name here" {...register('name')} />
 
         {errors.email && <span>{errors.email.message}</span>}
         <input placeholder="Email address" {...register('email')} />

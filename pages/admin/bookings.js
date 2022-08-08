@@ -1,11 +1,11 @@
 import useSWR from 'swr';
 import { HolidazeAdminHead } from '../../components/Head';
-import { useAuth } from '../../util/AuthContext';
+import { useAuthAPI } from '../../util/AuthAPIContext';
 
 const Bookings = () => {
-  const { authFetcher } = useAuth();
+  const { authGet } = useAuthAPI();
 
-  const { data, error } = useSWR('bookings', authFetcher);
+  const { data, error } = useSWR('bookings', authGet);
 
   if (!data) {
     return <div>LOADING</div>;
