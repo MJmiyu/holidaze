@@ -9,7 +9,11 @@ const schema = yup.object().shape({
   name: yup.string().required('Enter the hotel name'),
   description: yup.string().required('Enter a description'),
   address: yup.string().required('Enter an address'),
-  price: yup.number().required('Enter a price'),
+  price: yup
+    .number()
+    .typeError('Must be a number')
+    .positive('Must be greater than 0')
+    .required('Enter a price'),
 });
 
 const HotelForm = ({ hotel }) => {
