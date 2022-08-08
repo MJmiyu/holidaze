@@ -4,8 +4,12 @@ import Nav from '../../components/Nav';
 import useSWR from 'swr';
 import { HolidazeHead } from '../../components/Head';
 import { useAPI } from '../../util/APIContext';
+import { useState } from 'react';
+import BookHotelForm from '../../components/BookHotelForm';
 
 const Hotel = () => {
+  const [showModal, setShowModal] = useState(false);
+
   const router = useRouter();
   const { id } = router.query;
 
@@ -21,9 +25,11 @@ const Hotel = () => {
     return <div>Failed to load hotel</div>;
   }
 
+  const hotel = data.data;
+
   const {
     attributes: { name, description, address, price },
-  } = data.data;
+  } = hotel;
 
   return (
     <div className={styles.container}>
@@ -34,6 +40,13 @@ const Hotel = () => {
       Description: {description}
       Address: {address}
       Price: {price}
+      <button onClick={() => setShowModal(true)}>Book room</button>
+      {showModal && (
+        <>
+          <BookHotelForm hotel={hotel} />
+          <button onClick={() => setShowModal(false)}>Close</button>
+        </>
+      )}
     </div>
   );
 };
