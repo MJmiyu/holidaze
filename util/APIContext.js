@@ -28,7 +28,7 @@ export const APIProvider = ({ children }) => {
   const post = useCallback(async (url, data) => {
     try {
       const body = JSON.stringify({ data });
-      console.log(body);
+
       const response = await fetch(STRAPI_URL + url, {
         method: 'POST',
         body,

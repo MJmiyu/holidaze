@@ -61,32 +61,61 @@ export const AuthAPIProvider = ({ children }) => {
   const authGet = useCallback(
     async (url) => {
       try {
-        const result = await fetch(STRAPI_URL + url, {
+        const response = await fetch(STRAPI_URL + url, {
           headers: {
             Authorization: `Bearer ${jwt}`,
+            Accept: 'application/json',
           },
         });
 
-        if (result.status === 404) {
+        if (response.status === 404) {
           router.push('/');
         }
 
-        if (result.status === 403 || result.status === 401) {
+        if (response.status === 403 || response.status === 401) {
           router.push('/admin');
         }
 
-        const json = await result.json();
+        const json = await response.json();
         return json;
       } catch (e) {
         console.error(e);
       }
     },
-    [router]
+    [router, jwt]
+  );
+
+  const authPost = useCallback(
+    async (url, data) => {
+      try {
+        const body = JSON.stringify({ data });
+
+        const response = await fetch(STRAPI_URL + url, {
+          method: 'POST',
+          body,
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${jwt}`,
+          },
+        });
+
+        if (response.status === 403 || response.status === 401) {
+          router.push('/admin');
+        }
+
+        return true;
+      } catch (e) {
+        console.error(e);
+        return false;
+      }
+    },
+    [router, jwt]
   );
 
   const contextValue = {
-    authGet,
     login,
+    authGet,
+    authPost,
   };
 
   return (

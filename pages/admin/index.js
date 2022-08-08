@@ -23,9 +23,12 @@ const LoginPage = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = useCallback(({ username, password }) => {
-    login(username, password);
-  });
+  const onSubmit = useCallback(
+    ({ username, password }) => {
+      login(username, password);
+    },
+    [login]
+  );
 
   return (
     <div className={commonStyles.container}>
