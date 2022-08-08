@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import styles from './Nav.module.css';
+import Search from './Search';
 
 const Nav = () => {
   return (
@@ -7,6 +8,7 @@ const Nav = () => {
       <Link href="/">Home</Link>
       <Link href="/hotels">Hotels</Link>
       <Link href="/contact">Contact</Link>
+      <Search />
     </div>
   );
 };

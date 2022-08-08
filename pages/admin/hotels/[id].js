@@ -14,8 +14,6 @@ const EditHotel = () => {
 
   const { data, error } = useSWR('hotels/' + id, get);
 
-  console.log(data);
-
   if (!data) {
     return <div>Loading</div>;
   }
