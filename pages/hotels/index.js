@@ -32,7 +32,7 @@ const Hotels = () => {
         } = hotel;
 
         return (
-          <Link key={id} href={{ pathname: 'hotels/[id]', query: { id } }}>
+          <Link key={id} href={{ pathname: '/hotels/[id]', query: { id } }}>
             {name}
           </Link>
         );

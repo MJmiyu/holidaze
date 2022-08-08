@@ -4,7 +4,7 @@ import styles from './Search.module.css';
 import qs from 'qs';
 import Link from 'next/link';
 
-const Search = ({ admin }) => {
+const Search = () => {
   const [query, setQuery] = useState('');
   const [hotels, setHotels] = useState([]);
 
@@ -48,7 +48,7 @@ const Search = ({ admin }) => {
               <Link
                 key={hotel.id}
                 href={{
-                  pathname: admin ? '/admin/hotels/[id]' : '/hotels/[id]',
+                  pathname: '/hotels/[id]',
                   query: { id: hotel.id },
                 }}
               >
