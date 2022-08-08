@@ -112,10 +112,38 @@ export const AuthAPIProvider = ({ children }) => {
     [router, jwt]
   );
 
+  const authPut = useCallback(
+    async (url, id, data) => {
+      try {
+        const body = JSON.stringify({ data });
+
+        const response = await fetch(STRAPI_URL + url + '/' + id, {
+          method: 'PUT',
+          body,
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${jwt}`,
+          },
+        });
+
+        if (response.status === 403 || response.status === 401) {
+          router.push('/admin');
+        }
+
+        return true;
+      } catch (e) {
+        console.error(e);
+        return false;
+      }
+    },
+    [router, jwt]
+  );
+
   const contextValue = {
     login,
     authGet,
     authPost,
+    authPut,
   };
 
   return (

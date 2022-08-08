@@ -1,4 +1,4 @@
-import CreateHotelForm from '../../../components/CreateHotelForm';
+import HotelForm from '../../../components/HotelForm';
 import { HolidazeAdminHead } from '../../../components/Head';
 
 const CreateHotel = () => {
@@ -6,7 +6,7 @@ const CreateHotel = () => {
     <div>
       <HolidazeAdminHead />
       Create Hotel
-      <CreateHotelForm />
+      <HotelForm />
     </div>
   );
 };

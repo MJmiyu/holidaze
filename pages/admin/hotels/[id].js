@@ -4,6 +4,7 @@ import Nav from '../../../components/Nav';
 import useSWR from 'swr';
 import { HolidazeAdminHead } from '../../../components/Head';
 import { useAPI } from '../../../util/APIContext';
+import HotelForm from '../../../components/HotelForm';
 
 const EditHotel = () => {
   const router = useRouter();
@@ -11,9 +12,11 @@ const EditHotel = () => {
 
   const { get } = useAPI();
 
-  const { data: hotel, error } = useSWR('hotels/' + id, get);
+  const { data, error } = useSWR('hotels/' + id, get);
 
-  if (!hotel) {
+  console.log(data);
+
+  if (!data) {
     return <div>Loading</div>;
   }
 
@@ -21,15 +24,18 @@ const EditHotel = () => {
     return <div>Failed to load hotel</div>;
   }
 
+  const hotel = data.data;
+
   return (
     <div className={styles.container}>
       <HolidazeAdminHead />
       <Nav />
       Hotel with id : {hotel.id}
-      Name: {hotel.name}
-      Description: {hotel.description}
-      Address: {hotel.address}
-      Price: {hotel.price}
+      Name: {hotel.attributes.name}
+      Description: {hotel.attributes.description}
+      Address: {hotel.attributes.address}
+      Price: {hotel.attributes.price}
+      <HotelForm hotel={hotel} />
     </div>
   );
 };

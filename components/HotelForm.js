@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useCallback } from 'react';
-import styles from './CreateHotelForm.module.css';
+import styles from './HotelForm.module.css';
 import { useAuthAPI } from '../util/AuthAPIContext';
 
 const schema = yup.object().shape({
@@ -12,26 +12,44 @@ const schema = yup.object().shape({
   price: yup.number().required('Enter a price'),
 });
 
-const CreateHotelForm = () => {
+const HotelForm = ({ hotel }) => {
+  const editing = !!hotel;
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: {
+      name: editing ? hotel.attributes.name : '',
+      description: editing ? hotel.attributes.description : '',
+      address: editing ? hotel.attributes.address : '',
+      price: editing ? hotel.attributes.price : 1000,
+    },
   });
 
-  const { authPost } = useAuthAPI();
+  const { authPost, authPut } = useAuthAPI();
 
   const onSubmit = useCallback(
     async (data) => {
-      const success = await authPost('hotels', data);
+      if (editing) {
+        const success = await authPut('hotels', hotel.id, data);
 
-      if (!success) {
-        console.error('Failed creating hotel');
+        if (success) {
+          window.location.reload();
+        } else {
+          console.error('Failed creating hotel');
+        }
+      } else {
+        const success = await authPost('hotels', data);
+
+        if (!success) {
+          console.error('Failed creating hotel');
+        }
       }
     },
-    [authPost]
+    [editing, hotel, authPost, authPut]
   );
 
   return (
@@ -49,7 +67,7 @@ const CreateHotelForm = () => {
         {errors.address && <span>{errors.address.message}</span>}
         <input placeholder="Enter an address here" {...register('address')} />
 
-        {errors.proce && <span>{errors.price.message}</span>}
+        {errors.price && <span>{errors.price.message}</span>}
         <input placeholder="Enter a price here" {...register('price')} />
 
         <button>Submit</button>
@@ -58,4 +76,4 @@ const CreateHotelForm = () => {
   );
 };
 
-export default CreateHotelForm;
+export default HotelForm;
