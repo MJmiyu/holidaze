@@ -6,10 +6,13 @@ import Image from 'next/image';
 const UploadImage = ({ image, setFile }) => {
   const [showUpload, setShowUpload] = useState(!image);
 
-  const handleChange = useCallback((e) => {
-    const [file] = e.target.files;
-    setFile(file);
-  }, []);
+  const handleChange = useCallback(
+    (e) => {
+      const [file] = e.target.files;
+      setFile(file);
+    },
+    [setFile]
+  );
 
   const imageUrl = image.attributes.formats.small.url;
 
@@ -21,6 +24,7 @@ const UploadImage = ({ image, setFile }) => {
       {!showUpload && (
         <>
           <Image
+            alt=""
             src={urlJoin(STRAPI_URL, imageUrl)}
             width={width}
             height={height}

@@ -1,9 +1,11 @@
 import Link from 'next/link';
-import styles from '../../../styles/Hotels.module.css';
+import styles from '../../../styles/admin/Hotels.module.css';
+import commonStyles from '../../../styles/Common.module.css';
 import useSWR from 'swr';
 import { HolidazeAdminHead } from '../../../components/Head';
-import Nav from '../../../components/Nav';
 import { useAPI } from '../../../util/APIContext';
+import AdminNav from '../../../components/AdminNav';
+import Loading from '../../../components/Loading';
 
 const Hotels = () => {
   const { get } = useAPI();
@@ -11,7 +13,7 @@ const Hotels = () => {
   const { data, error } = useSWR('hotels', get);
 
   if (!data) {
-    return <div>Loading</div>;
+    return <Loading />;
   }
 
   if (error) {
@@ -20,9 +22,9 @@ const Hotels = () => {
   const hotels = data.data;
 
   return (
-    <div className={styles.container}>
+    <div className={commonStyles.Page}>
       <HolidazeAdminHead />
-      <Nav />
+      <AdminNav />
       Hotels
       {hotels.map((hotel) => {
         return (

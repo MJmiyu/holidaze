@@ -1,6 +1,9 @@
 import useSWR from 'swr';
+import AdminNav from '../../components/AdminNav';
 import { HolidazeAdminHead } from '../../components/Head';
-import styles from '../../styles/Common.module.css';
+import Loading from '../../components/Loading';
+import styles from '../../styles/admin/Messages.module.css';
+import commonStyles from '../../styles/Common.module.css';
 import { useAuthAPI } from '../../util/AuthAPIContext';
 
 const Messages = () => {
@@ -9,7 +12,7 @@ const Messages = () => {
   const { data, error } = useSWR('messages', authGet);
 
   if (!data) {
-    return <div>Loading</div>;
+    return <Loading />;
   }
 
   if (error) {
@@ -19,8 +22,9 @@ const Messages = () => {
   const messages = data.data;
 
   return (
-    <div className={styles.container}>
+    <div className={commonStyles.Page}>
       <HolidazeAdminHead />
+      <AdminNav />
 
       {messages.map((message) => {
         return (

@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAuthAPI } from '../../util/AuthAPIContext';
+import AdminNav from '../../components/AdminNav';
 
 const schema = yup.object().shape({
   username: yup.string().required('Enter your username or email'),
@@ -31,10 +32,11 @@ const LoginPage = () => {
   );
 
   return (
-    <div className={commonStyles.container}>
+    <div className={commonStyles.Page}>
       <HolidazeAdminHead />
+      <AdminNav />
 
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      <form className={styles.Form} onSubmit={handleSubmit(onSubmit)}>
         {errors.name && <span>{errors.username.message}</span>}
         <input placeholder="Username" {...register('username')} />
 

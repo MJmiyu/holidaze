@@ -1,10 +1,12 @@
 import { useRouter } from 'next/router';
-import styles from '../../../styles/Hotel.module.css';
-import Nav from '../../../components/Nav';
+import styles from '../../../styles/admin/Hotel.module.css';
+import commonStyles from '../../../styles/Common.module.css';
 import useSWR from 'swr';
 import { HolidazeAdminHead } from '../../../components/Head';
 import { useAPI } from '../../../util/APIContext';
 import HotelForm from '../../../components/HotelForm';
+import AdminNav from '../../../components/AdminNav';
+import Loading from '../../../components/Loading';
 
 const EditHotel = () => {
   const router = useRouter();
@@ -15,7 +17,7 @@ const EditHotel = () => {
   const { data, error } = useSWR('hotels/' + id, get);
 
   if (!data) {
-    return <div>Loading</div>;
+    return <Loading />;
   }
 
   if (error) {
@@ -25,9 +27,9 @@ const EditHotel = () => {
   const hotel = data.data;
 
   return (
-    <div className={styles.container}>
+    <div className={commonStyles.Page}>
       <HolidazeAdminHead />
-      <Nav />
+      <AdminNav />
       Hotel with id : {hotel.id}
       Name: {hotel.attributes.name}
       Description: {hotel.attributes.description}

@@ -51,7 +51,7 @@ const BookHotelForm = ({
 
   const bookingPrice = useMemo(() => {
     const days = differenceInDays(new Date(toDate), new Date(fromDate));
-    return days * price;
+    return days * price * rooms;
   }, [fromDate, toDate, rooms, price]);
 
   const isToDateAfterFromDate = useMemo(() => {

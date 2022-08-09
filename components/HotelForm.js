@@ -41,41 +41,55 @@ const HotelForm = ({ hotel }) => {
 
   const { authPost, authPut, uploadImage, deleteImage } = useAuthAPI();
 
-  const onSubmit = useCallback(
-    async (data) => {
-      if (editing) {
-        const result = await authPut('hotels', hotel.id, data);
+  const editHotel = useCallback(
+    async (data, file) => {
+      const result = await authPut('hotels', hotel.id, data);
 
-        if (result) {
-          if (file) {
-            const success = await uploadImage(file, hotel.id);
+      if (result) {
+        if (file) {
+          const success = await uploadImage(file, hotel.id);
 
-            if (success && hotel.attributes.image.data) {
-              await deleteImage(hotel.attributes.image.data.id);
-            }
+          if (success && hotel.attributes.image.data) {
+            await deleteImage(hotel.attributes.image.data.id);
           }
-
-          window.location.reload();
-        } else {
-          console.error('Failed creating hotel');
         }
+
+        window.location.reload();
       } else {
-        const result = await authPost('hotels', data);
-
-        if (result) {
-          const hotelId = result.data.id;
-
-          if (file) {
-            await uploadImage(file, hotelId);
-          }
-
-          router.push('/admin/hotels/' + hotelId);
-        } else {
-          console.error('Failed creating hotel');
-        }
+        console.error('Failed creating hotel');
       }
     },
-    [editing, hotel, authPost, authPut, file]
+    [hotel, authPut, uploadImage, deleteImage]
+  );
+
+  const createHotel = useCallback(
+    async (data, file) => {
+      const result = await authPost('hotels', data);
+
+      if (result) {
+        const hotelId = result.data.id;
+
+        if (file) {
+          await uploadImage(file, hotelId);
+        }
+
+        router.push('/admin/hotels/' + hotelId);
+      } else {
+        console.error('Failed creating hotel');
+      }
+    },
+    [authPost, uploadImage, router]
+  );
+
+  const onSubmit = useCallback(
+    (data) => {
+      if (editing) {
+        editHotel(data, file);
+      } else {
+        createHotel(data, file);
+      }
+    },
+    [editing, file, editHotel, createHotel]
   );
 
   return (

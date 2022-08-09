@@ -32,7 +32,7 @@ const Search = () => {
     return () => {
       clearTimeout(timer);
     };
-  }, [query]);
+  }, [query, get]);
 
   const handleSetQuery = useCallback((e) => {
     const query = e.target.value || '';

@@ -1,11 +1,11 @@
-.Nav {
+.AdminNav {
   display: flex;
   justify-content: center;
   align-items: center;
   padding-bottom: 10px;
 }
 
-.Nav > a {
+.AdminNav > a {
   padding: 10px;
   width: 150px;
   text-align: center;

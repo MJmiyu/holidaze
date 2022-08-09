@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { createContext, useCallback, useContext, useState } from 'react';
-import { STRAPI_API_URL } from '../constants/strapi';
+import { STRAPI_API_URL, STRAPI_POPULATE_PARAMS } from '../constants/strapi';
 import { isLocal } from './isLocal';
 import urlJoin from 'url-join';
 
@@ -62,15 +62,12 @@ export const AuthAPIProvider = ({ children }) => {
   const authGet = useCallback(
     async (url) => {
       try {
-        const response = await fetch(
-          urlJoin(STRAPI_API_URL, url, '?' + STRAPI_POPULATE_PARAMS),
-          {
-            headers: {
-              Authorization: `Bearer ${jwt}`,
-              Accept: 'application/json',
-            },
-          }
-        );
+        const response = await fetch(urlJoin(STRAPI_API_URL, url), {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+            Accept: 'application/json',
+          },
+        });
 
         if (response.status === 404) {
           router.push('/');
