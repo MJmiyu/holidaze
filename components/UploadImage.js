@@ -1,7 +1,10 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { STRAPI_URL } from '../constants/strapi';
+import styles from './UploadImage.module.css';
 import urlJoin from 'url-join';
 import Image from 'next/image';
+import Input from './Input';
+import Button from './Button';
 
 const UploadImage = ({ image, setFile }) => {
   const [showUpload, setShowUpload] = useState(!image);
@@ -14,13 +17,20 @@ const UploadImage = ({ image, setFile }) => {
     [setFile]
   );
 
-  const imageUrl = image.attributes.formats.small.url;
+  const { imageUrl, width, height } = useMemo(() => {
+    if (!image) {
+      return {};
+    }
 
-  const width = image.attributes.formats.small.width;
-  const height = image.attributes.formats.small.height;
+    return {
+      imageUrl: image.attributes.formats.small.url,
+      width: image.attributes.formats.small.width,
+      height: image.attributes.formats.small.height,
+    };
+  }, [image]);
 
   return (
-    <div>
+    <div className={styles.UploadImageContainer}>
       {!showUpload && (
         <>
           <Image
@@ -30,16 +40,15 @@ const UploadImage = ({ image, setFile }) => {
             height={height}
           />
 
-          <button onClick={() => setShowUpload(true)}>Edit</button>
+          <Button onClick={() => setShowUpload(true)}>Edit</Button>
         </>
       )}
-
       {showUpload && (
         <>
-          <input type="file" accept="image/*" onChange={handleChange} />
+          <Input type="file" accept="image/*" onChange={handleChange} />
 
           {image && (
-            <button onClick={() => setShowUpload(false)}>Cancel</button>
+            <Button onClick={() => setShowUpload(false)}>Cancel</Button>
           )}
         </>
       )}

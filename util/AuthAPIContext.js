@@ -81,12 +81,15 @@ export const AuthAPIProvider = ({ children }) => {
 
   const authGet = useCallback(
     async (url) => {
-      const response = await fetch(urlJoin(STRAPI_API_URL, url), {
-        headers: {
-          Authorization: `Bearer ${jwt}`,
-          Accept: 'application/json',
-        },
-      });
+      const response = await fetch(
+        urlJoin(STRAPI_API_URL, url, '?' + STRAPI_POPULATE_PARAMS),
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+            Accept: 'application/json',
+          },
+        }
+      );
 
       if (response.status === 404) {
         router.push('/');

@@ -3,6 +3,7 @@ import { useAPI } from '../util/APIContext';
 import styles from './Search.module.css';
 import qs from 'qs';
 import NextLink from './NextLink';
+import Input from './Input';
 
 const Search = () => {
   const [query, setQuery] = useState('');
@@ -41,7 +42,7 @@ const Search = () => {
 
   return (
     <div>
-      <input onChange={handleSetQuery} placeholder="Search hotels" />
+      <Input onChange={handleSetQuery} placeholder="Search hotels" />
 
       {query.length > 0 && (
         <div>

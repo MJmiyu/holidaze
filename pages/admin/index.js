@@ -7,6 +7,8 @@ import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAuthAPI } from '../../util/AuthAPIContext';
 import AdminNav from '../../components/AdminNav';
+import Input from '../../components/Input';
+import Button from '../../components/Button';
 
 const schema = yup.object().shape({
   username: yup.string().required('Enter your username or email'),
@@ -34,15 +36,15 @@ const LoginPage = () => {
   return (
     <div className={commonStyles.Page}>
       <HolidazeAdminHead />
-
+      Login
       <form className={styles.Form} onSubmit={handleSubmit(onSubmit)}>
         {errors.name && <span>{errors.username.message}</span>}
-        <input placeholder="Username" {...register('username')} />
+        <Input placeholder="Username" {...register('username')} />
 
         {errors.email && <span>{errors.password.message}</span>}
-        <input placeholder="Password" {...register('password')} />
+        <Input placeholder="Password" {...register('password')} />
 
-        <button>Login</button>
+        <Button>Login</Button>
       </form>
     </div>
   );

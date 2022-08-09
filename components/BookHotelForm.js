@@ -5,6 +5,8 @@ import { useCallback, useMemo, useState } from 'react';
 import styles from './BookHotelForm.module.css';
 import { useAPI } from '../util/APIContext';
 import { format, addDays, differenceInDays, isAfter } from 'date-fns';
+import Input from './Input';
+import Button from './Button';
 
 const schema = yup.object().shape({
   email: yup
@@ -74,20 +76,20 @@ const BookHotelForm = ({
   return (
     <form className={styles.Form} onSubmit={handleSubmit(onSubmit)}>
       {errors.email && <span>{errors.email.message}</span>}
-      <input placeholder="Email" {...register('email')} />
+      <Input placeholder="Email" {...register('email')} />
 
       {errors.fromDate && <span>{errors.fromDate.message}</span>}
-      <input type="date" placeholder="From" {...register('fromDate')} />
+      <Input type="date" placeholder="From" {...register('fromDate')} />
 
       {errors.toDate && <span>{errors.toDate.message}</span>}
-      <input type="date" placeholder="To" {...register('toDate')} />
+      <Input type="date" placeholder="To" {...register('toDate')} />
 
       {errors.rooms && <span>{errors.rooms.message}</span>}
-      <input placeholder="Rooms" {...register('rooms')} />
+      <Input placeholder="Rooms" {...register('rooms')} />
 
       {isToDateAfterFromDate && <>Current booking price: {bookingPrice}</>}
 
-      <button>Order</button>
+      <Button>Order</Button>
     </form>
   );
 };

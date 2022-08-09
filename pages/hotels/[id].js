@@ -11,6 +11,7 @@ import { STRAPI_URL } from '../../constants/strapi';
 import urlJoin from 'url-join';
 import Image from 'next/image';
 import Loading from '../../components/Loading';
+import Button from '../../components/Button';
 
 const Hotel = () => {
   const [showModal, setShowModal] = useState(false);
@@ -55,11 +56,11 @@ const Hotel = () => {
           height={200}
         />
       )}
-      <button onClick={() => setShowModal(true)}>Book room</button>
+      <Button onClick={() => setShowModal(true)}>Book room</Button>
       {showModal && (
         <>
           <BookHotelForm hotel={hotel} />
-          <button onClick={() => setShowModal(false)}>Close</button>
+          <Button onClick={() => setShowModal(false)}>Close</Button>
         </>
       )}
     </div>

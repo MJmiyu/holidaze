@@ -4,6 +4,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useCallback } from 'react';
 import styles from './ContactForm.module.css';
 import { useAPI } from '../util/APIContext';
+import Input from './Input';
+import Button from './Button';
+import Textarea from './Textarea';
 
 const schema = yup.object().shape({
   name: yup.string().required('Enter your name here'),
@@ -41,18 +44,21 @@ const ContactForm = () => {
     <>
       <form className={styles.Form} onSubmit={handleSubmit(onSubmit)}>
         {errors.name && <span>{errors.name.message}</span>}
-        <input placeholder="Enter your name here" {...register('name')} />
+        <Input placeholder="Enter your name here" {...register('name')} />
 
         {errors.email && <span>{errors.email.message}</span>}
-        <input placeholder="Email address" {...register('email')} />
+        <Input placeholder="Email address" {...register('email')} />
 
         {errors.subject && <span>{errors.subject.message}</span>}
-        <input placeholder="Enter a subject here" {...register('subject')} />
+        <Input placeholder="Enter a subject here" {...register('subject')} />
 
         {errors.message && <span>{errors.message.message}</span>}
-        <input placeholder="Enter your message here" {...register('message')} />
+        <Textarea
+          placeholder="Enter your message here"
+          {...register('message')}
+        />
 
-        <button>Submit</button>
+        <Button>Submit</Button>
       </form>
     </>
   );

@@ -29,12 +29,9 @@ const EditHotel = () => {
   return (
     <div className={commonStyles.Page}>
       <HolidazeAdminHead />
+
       <AdminNav />
-      Hotel with id : {hotel.id}
-      Name: {hotel.attributes.name}
-      Description: {hotel.attributes.description}
-      Address: {hotel.attributes.address}
-      Price: {hotel.attributes.price}
+
       <HotelForm hotel={hotel} />
     </div>
   );
