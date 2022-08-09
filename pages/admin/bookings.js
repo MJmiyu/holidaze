@@ -3,7 +3,7 @@ import AdminNav from '../../components/AdminNav';
 import { HolidazeAdminHead } from '../../components/Head';
 import Loading from '../../components/Loading';
 import { useAuthAPI } from '../../util/AuthAPIContext';
-import styles from '../../styles/Bookings.module.css';
+import styles from '../../styles/admin/Bookings.module.css';
 import commonStyles from '../../styles/Common.module.css';
 
 const Bookings = () => {

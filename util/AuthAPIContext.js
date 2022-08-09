@@ -1,5 +1,11 @@
 import { useRouter } from 'next/router';
-import { createContext, useCallback, useContext, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 import { STRAPI_API_URL, STRAPI_POPULATE_PARAMS } from '../constants/strapi';
 import { isLocal } from './isLocal';
 import urlJoin from 'url-join';
@@ -17,12 +23,26 @@ const storeJwt = (jwt) => {
   localStorage.setItem(LOCAL_STORAGE_JWT_KEY, jwt);
 };
 
+const clearJwt = () => {
+  localStorage.clear(LOCAL_STORAGE_JWT_KEY);
+};
+
 const AuthAPIContext = createContext({});
 
 export const AuthAPIProvider = ({ children }) => {
   const [jwt, setJwt] = useState(getJwt());
 
   const router = useRouter();
+
+  const resetJwt = useCallback(() => {
+    setJwt(null);
+    clearJwt();
+  }, []);
+
+  const logout = useCallback(() => {
+    resetJwt();
+    router.push('/admin');
+  }, [router, resetJwt]);
 
   const login = useCallback(
     async (username, password) => {
@@ -61,29 +81,27 @@ export const AuthAPIProvider = ({ children }) => {
 
   const authGet = useCallback(
     async (url) => {
-      try {
-        const response = await fetch(urlJoin(STRAPI_API_URL, url), {
-          headers: {
-            Authorization: `Bearer ${jwt}`,
-            Accept: 'application/json',
-          },
-        });
+      const response = await fetch(urlJoin(STRAPI_API_URL, url), {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+          Accept: 'application/json',
+        },
+      });
 
-        if (response.status === 404) {
-          router.push('/');
-        }
-
-        if (response.status === 403 || response.status === 401) {
-          router.push('/admin');
-        }
-
-        const json = await response.json();
-        return json;
-      } catch (e) {
-        console.error(e);
+      if (response.status === 404) {
+        router.push('/');
       }
+
+      if (response.status === 403 || response.status === 401) {
+        resetJwt();
+        router.push('/admin');
+        throw new Error('Response status is ' + response.status);
+      }
+
+      const json = await response.json();
+      return json;
     },
-    [router, jwt]
+    [router, jwt, resetJwt]
   );
 
   const authPost = useCallback(
@@ -102,6 +120,7 @@ export const AuthAPIProvider = ({ children }) => {
         });
 
         if (response.status === 403 || response.status === 401) {
+          resetJwt();
           router.push('/admin');
         }
 
@@ -111,7 +130,7 @@ export const AuthAPIProvider = ({ children }) => {
         console.error(e);
       }
     },
-    [router, jwt]
+    [router, jwt, resetJwt]
   );
 
   const authPut = useCallback(
@@ -133,6 +152,7 @@ export const AuthAPIProvider = ({ children }) => {
         );
 
         if (response.status === 403 || response.status === 401) {
+          resetJwt();
           router.push('/admin');
         }
 
@@ -142,7 +162,7 @@ export const AuthAPIProvider = ({ children }) => {
         console.error(e);
       }
     },
-    [router, jwt]
+    [router, jwt, resetJwt]
   );
 
   const uploadImage = useCallback(
@@ -181,6 +201,7 @@ export const AuthAPIProvider = ({ children }) => {
   }, []);
 
   const contextValue = {
+    logout,
     login,
     authGet,
     authPost,

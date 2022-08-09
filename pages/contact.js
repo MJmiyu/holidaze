@@ -1,4 +1,4 @@
-import commonStyles from '../stules/Common.module.css';
+import commonStyles from '../styles/Common.module.css';
 import styles from '../styles/Contact.module.css';
 import Nav from '../components/Nav';
 import ContactForm from '../components/ContactForm';

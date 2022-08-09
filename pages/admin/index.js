@@ -34,7 +34,6 @@ const LoginPage = () => {
   return (
     <div className={commonStyles.Page}>
       <HolidazeAdminHead />
-      <AdminNav />
 
       <form className={styles.Form} onSubmit={handleSubmit(onSubmit)}>
         {errors.name && <span>{errors.username.message}</span>}

@@ -10,20 +10,16 @@ export const APIProvider = ({ children }) => {
 
   const get = useCallback(
     async (url) => {
-      try {
-        const response = await fetch(
-          urlJoin(STRAPI_API_URL, url, '?' + STRAPI_POPULATE_PARAMS)
-        );
+      const response = await fetch(
+        urlJoin(STRAPI_API_URL, url, '?' + STRAPI_POPULATE_PARAMS)
+      );
 
-        if (response.status === 404) {
-          router.push('/');
-        }
-
-        const json = await response.json();
-        return json;
-      } catch (e) {
-        console.error(e);
+      if (response.status === 404) {
+        router.push('/');
       }
+
+      const json = await response.json();
+      return json;
     },
     [router]
   );

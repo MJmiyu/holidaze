@@ -1,13 +1,19 @@
-import Link from 'next/link';
 import styles from './Nav.module.css';
+import NextLink from './NextLink';
 import Search from './Search';
 
 const Nav = () => {
   return (
     <div className={styles.Nav}>
-      <Link href="/">Home</Link>
-      <Link href="/hotels">Hotels</Link>
-      <Link href="/contact">Contact</Link>
+      <NextLink className={styles.NavLink} href="/">
+        Home
+      </NextLink>
+      <NextLink className={styles.NavLink} href="/hotels">
+        Hotels
+      </NextLink>
+      <NextLink className={styles.NavLink} href="/contact">
+        Contact
+      </NextLink>
       <Search />
     </div>
   );

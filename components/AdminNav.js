@@ -1,12 +1,24 @@
-import Link from 'next/link';
-import styles from './AdminNav.module.css';
+import { useAuthAPI } from '../util/AuthAPIContext';
+import styles from './Nav.module.css';
+import NextLink from './NextLink';
 
 const AdminNav = () => {
+  const { logout } = useAuthAPI();
+
   return (
-    <div className={styles.AdminNav}>
-      <Link href="/admin/hotels">Hotels</Link>
-      <Link href="/admin/bookings">Bookings</Link>
-      <Link href="/admin/messages">Messages</Link>
+    <div className={styles.Nav}>
+      <NextLink className={styles.NavLink} href="/admin/hotels">
+        Hotels
+      </NextLink>
+      <NextLink className={styles.NavLink} href="/admin/bookings">
+        Bookings
+      </NextLink>
+      <NextLink className={styles.NavLink} href="/admin/messages">
+        Messages
+      </NextLink>
+      <div className={styles.NavLink} onClick={logout}>
+        Logout
+      </div>
     </div>
   );
 };

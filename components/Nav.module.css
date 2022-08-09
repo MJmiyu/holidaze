@@ -5,9 +5,14 @@
   padding-bottom: 10px;
 }
 
-.Nav > a {
+.NavLink {
+  font-size: 20px;
   padding: 10px;
   width: 150px;
   text-align: center;
-  border: 1px solid #aaa;
+}
+
+.NavLink:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }

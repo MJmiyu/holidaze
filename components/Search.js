@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useAPI } from '../util/APIContext';
 import styles from './Search.module.css';
 import qs from 'qs';
-import Link from 'next/link';
+import NextLink from './NextLink';
 
 const Search = () => {
   const [query, setQuery] = useState('');
@@ -47,7 +47,7 @@ const Search = () => {
         <div>
           {hotels.map((hotel) => {
             return (
-              <Link
+              <NextLink
                 key={hotel.id}
                 href={{
                   pathname: '/hotels/[id]',
@@ -55,7 +55,7 @@ const Search = () => {
                 }}
               >
                 {hotel.attributes.name}
-              </Link>
+              </NextLink>
             );
           })}
         </div>

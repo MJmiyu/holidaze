@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import styles from '../../styles/Hotels.module.css';
 import commonStyles from '../../styles/Common.module.css';
 import useSWR from 'swr';
@@ -6,6 +5,7 @@ import { useAPI } from '../../util/APIContext';
 import { HolidazeHead } from '../../components/Head';
 import Nav from '../../components/Nav';
 import Loading from '../../components/Loading';
+import NextLink from '../../components/NextLink';
 
 const Hotels = () => {
   const { get } = useAPI();
@@ -34,9 +34,9 @@ const Hotels = () => {
         } = hotel;
 
         return (
-          <Link key={id} href={{ pathname: '/hotels/[id]', query: { id } }}>
+          <NextLink key={id} href={{ pathname: '/hotels/[id]', query: { id } }}>
             {name}
-          </Link>
+          </NextLink>
         );
       })}
     </div>

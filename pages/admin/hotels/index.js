@@ -1,16 +1,16 @@
-import Link from 'next/link';
 import styles from '../../../styles/admin/Hotels.module.css';
 import commonStyles from '../../../styles/Common.module.css';
 import useSWR from 'swr';
 import { HolidazeAdminHead } from '../../../components/Head';
-import { useAPI } from '../../../util/APIContext';
 import AdminNav from '../../../components/AdminNav';
 import Loading from '../../../components/Loading';
+import NextLink from '../../../components/NextLink';
+import { useAuthAPI } from '../../../util/AuthAPIContext';
 
 const Hotels = () => {
-  const { get } = useAPI();
+  const { authGet } = useAuthAPI();
 
-  const { data, error } = useSWR('hotels', get);
+  const { data, error } = useSWR('hotels', authGet);
 
   if (!data) {
     return <Loading />;
@@ -19,6 +19,7 @@ const Hotels = () => {
   if (error) {
     return <div>Failed to load hotels</div>;
   }
+
   const hotels = data.data;
 
   return (
@@ -28,12 +29,12 @@ const Hotels = () => {
       Hotels
       {hotels.map((hotel) => {
         return (
-          <Link
+          <NextLink
             key={hotel.id}
             href={{ pathname: '/admin/hotels/[id]', query: { id: hotel.id } }}
           >
             {hotel.attributes.name}
-          </Link>
+          </NextLink>
         );
       })}
     </div>
