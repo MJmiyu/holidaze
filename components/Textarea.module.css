@@ -1,3 +1,9 @@
+.TextareaContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .Textarea {
   outline: none;
   border: 1px solid #19bfba;

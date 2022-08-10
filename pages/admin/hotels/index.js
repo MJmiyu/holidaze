@@ -1,11 +1,12 @@
 import styles from '../../../styles/admin/Hotels.module.css';
-import commonStyles from '../../../styles/Common.module.css';
 import useSWR from 'swr';
 import { HolidazeAdminHead } from '../../../components/Head';
 import AdminNav from '../../../components/AdminNav';
 import Loading from '../../../components/Loading';
 import NextLink from '../../../components/NextLink';
 import { useAuthAPI } from '../../../util/AuthAPIContext';
+import Page from '../../../components/Page';
+import Title from '../../../components/Title';
 
 const Hotels = () => {
   const { authGet } = useAuthAPI();
@@ -23,10 +24,13 @@ const Hotels = () => {
   const hotels = data.data;
 
   return (
-    <div className={commonStyles.Page}>
+    <Page>
       <HolidazeAdminHead />
+
       <AdminNav />
-      Hotels
+
+      <Title>Hotels</Title>
+
       {hotels.map((hotel) => {
         return (
           <NextLink
@@ -37,7 +41,7 @@ const Hotels = () => {
           </NextLink>
         );
       })}
-    </div>
+    </Page>
   );
 };
 

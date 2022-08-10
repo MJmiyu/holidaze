@@ -1,17 +1,21 @@
-import commonStyles from '../styles/Common.module.css';
 import styles from '../styles/Contact.module.css';
 import Nav from '../components/Nav';
 import ContactForm from '../components/ContactForm';
 import { HolidazeHead } from '../components/Head';
+import Title from '../components/Title';
+import Page from '../components/Page';
 
 const Contact = () => {
   return (
-    <div className={commonStyles.Page}>
+    <Page>
       <HolidazeHead />
+
       <Nav />
-      Contact
+
+      <Title>Contact us</Title>
+
       <ContactForm />
-    </div>
+    </Page>
   );
 };
 

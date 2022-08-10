@@ -1,0 +1,10 @@
+.Error {
+  color: #673147;
+  font-size: 12px;
+  font-weight: 600;
+  padding-left: 5px;
+}
+
+.Hidden {
+  visibility: hidden;
+}

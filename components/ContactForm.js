@@ -47,18 +47,23 @@ const ContactForm = () => {
   return (
     <>
       <form className={styles.Form} onSubmit={handleSubmit(onSubmit)}>
-        {errors.name && <span>{errors.name.message}</span>}
-        <Input placeholder="Enter your name here" {...register('name')} />
+        <Input error={errors.name} placeholder="Name" {...register('name')} />
 
-        {errors.email && <span>{errors.email.message}</span>}
-        <Input placeholder="Email address" {...register('email')} />
+        <Input
+          error={errors.email}
+          placeholder="Email address"
+          {...register('email')}
+        />
 
-        {errors.subject && <span>{errors.subject.message}</span>}
-        <Input placeholder="Enter a subject here" {...register('subject')} />
+        <Input
+          error={errors.subject}
+          placeholder="Subject"
+          {...register('subject')}
+        />
 
-        {errors.message && <span>{errors.message.message}</span>}
         <Textarea
-          placeholder="Enter your message here"
+          error={errors.message}
+          placeholder="Message"
           {...register('message')}
         />
 

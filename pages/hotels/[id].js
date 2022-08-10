@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import styles from '../../styles/Hotel.module.css';
-import commonStyles from '../../styles/Common.module.css';
 import Nav from '../../components/Nav';
 import useSWR from 'swr';
 import { HolidazeHead } from '../../components/Head';
@@ -12,6 +11,8 @@ import urlJoin from 'url-join';
 import Image from 'next/image';
 import Loading from '../../components/Loading';
 import Button from '../../components/Button';
+import Page from '../../components/Page';
+import Title from '../../components/Title';
 
 const Hotel = () => {
   const [showModal, setShowModal] = useState(false);
@@ -40,14 +41,19 @@ const Hotel = () => {
   const imageUrl = image.data ? image.data.attributes.url : null;
 
   return (
-    <div className={commonStyles.Page}>
+    <Page>
       <HolidazeHead />
+
       <Nav />
-      Hotel with id : {id}
+
+      <Title>{name}</Title>
+
+      {/* Hotel with id : {id}
       Name: {name}
       Description: {description}
       Address: {address}
-      Price: {price}
+      Price: {price} */}
+
       {imageUrl && (
         <Image
           alt=""
@@ -56,14 +62,16 @@ const Hotel = () => {
           height={200}
         />
       )}
+
       <Button onClick={() => setShowModal(true)}>Book room</Button>
+
       {showModal && (
         <>
           <BookHotelForm hotel={hotel} />
           <Button onClick={() => setShowModal(false)}>Close</Button>
         </>
       )}
-    </div>
+    </Page>
   );
 };
 

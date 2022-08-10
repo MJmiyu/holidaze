@@ -4,7 +4,8 @@ import { HolidazeAdminHead } from '../../components/Head';
 import Loading from '../../components/Loading';
 import { useAuthAPI } from '../../util/AuthAPIContext';
 import styles from '../../styles/admin/Bookings.module.css';
-import commonStyles from '../../styles/Common.module.css';
+import Page from '../../components/Page';
+import Title from '../../components/Title';
 
 const Bookings = () => {
   const { authGet } = useAuthAPI();
@@ -21,10 +22,13 @@ const Bookings = () => {
 
   const bookings = data.data;
   return (
-    <div className={commonStyles.Page}>
+    <Page>
       <HolidazeAdminHead />
+
       <AdminNav />
-      Bookings
+
+      <Title>Bookings</Title>
+
       {bookings.map((booking) => {
         return (
           <div key={booking.id}>
@@ -35,7 +39,7 @@ const Bookings = () => {
           </div>
         );
       })}
-    </div>
+    </Page>
   );
 };
 

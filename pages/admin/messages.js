@@ -2,8 +2,9 @@ import useSWR from 'swr';
 import AdminNav from '../../components/AdminNav';
 import { HolidazeAdminHead } from '../../components/Head';
 import Loading from '../../components/Loading';
+import Page from '../../components/Page';
+import Title from '../../components/Title';
 import styles from '../../styles/admin/Messages.module.css';
-import commonStyles from '../../styles/Common.module.css';
 import { useAuthAPI } from '../../util/AuthAPIContext';
 
 const Messages = () => {
@@ -22,9 +23,12 @@ const Messages = () => {
   const messages = data.data;
 
   return (
-    <div className={commonStyles.Page}>
+    <Page>
       <HolidazeAdminHead />
+
       <AdminNav />
+
+      <Title>Messages</Title>
 
       {messages.map((message) => {
         return (
@@ -36,7 +40,7 @@ const Messages = () => {
           </div>
         );
       })}
-    </div>
+    </Page>
   );
 };
 

@@ -1,17 +1,21 @@
 import HotelForm from '../../../components/HotelForm';
 import { HolidazeAdminHead } from '../../../components/Head';
 import styles from '../../../styles/admin/Hotel.module.css';
-import commonStyles from '../../../styles/Common.module.css';
 import AdminNav from '../../../components/AdminNav';
+import Page from '../../../components/Page';
+import Title from '../../../components/Title';
 
 const CreateHotel = () => {
   return (
-    <div className={commonStyles.Page}>
+    <Page>
       <HolidazeAdminHead />
+
       <AdminNav />
-      Create Hotel
+
+      <Title>Create hotel</Title>
+
       <HotelForm />
-    </div>
+    </Page>
   );
 };
 

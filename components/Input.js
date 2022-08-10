@@ -1,14 +1,14 @@
 import styles from './Input.module.css';
-import cn from 'classnames';
 import { forwardRef } from 'react';
+import InputError from './InputError';
 
-const Input = forwardRef(({ className, ...rest }, ref) => {
+const Input = forwardRef(({ error, ...rest }, ref) => {
   return (
-    <input
-      className={cn(styles.Input, { [className]: !!className })}
-      ref={ref}
-      {...rest}
-    />
+    <div className={styles.InputContainer}>
+      <input className={styles.Input} ref={ref} {...rest} />
+
+      <InputError error={error} />
+    </div>
   );
 });
 

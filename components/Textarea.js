@@ -1,14 +1,14 @@
 import styles from './Textarea.module.css';
-import cn from 'classnames';
 import { forwardRef } from 'react';
+import InputError from './InputError';
 
-const Textarea = forwardRef(({ className, ...rest }, ref) => {
+const Textarea = forwardRef(({ error, ...rest }, ref) => {
   return (
-    <textarea
-      className={cn(styles.Textarea, { [className]: !!className })}
-      ref={ref}
-      {...rest}
-    />
+    <div className={styles.TextareaContainer}>
+      <textarea className={styles.Textarea} ref={ref} {...rest} />
+
+      <InputError error={error} />
+    </div>
   );
 });
 
