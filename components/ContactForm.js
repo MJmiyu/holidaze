@@ -22,6 +22,7 @@ const ContactForm = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -35,9 +36,12 @@ const ContactForm = () => {
 
       if (!result) {
         console.error('Failed sending messages');
+      } else {
+        reset();
+        console.log('Add toast');
       }
     },
-    [post]
+    [post, reset]
   );
 
   return (
