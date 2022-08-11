@@ -9,6 +9,7 @@ import Page from '../../components/Page';
 import Title from '../../components/Title';
 import SubTitle from '../../components/SubTitle';
 import Image from 'next/image';
+import Stars from '../../components/Stars';
 
 const Hotels = () => {
   const { get } = useAPI();
@@ -60,7 +61,7 @@ const Hotels = () => {
                 />
 
                 <div className={styles.HoteInfo}>
-                  <div></div>
+                  <Stars stars={hotel.attributes.stars} />
                 </div>
               </div>
             </NextLink>
