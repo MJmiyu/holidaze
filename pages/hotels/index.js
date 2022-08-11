@@ -7,6 +7,8 @@ import Loading from '../../components/Loading';
 import NextLink from '../../components/NextLink';
 import Page from '../../components/Page';
 import Title from '../../components/Title';
+import SubTitle from '../../components/SubTitle';
+import Image from 'next/image';
 
 const Hotels = () => {
   const { get } = useAPI();
@@ -31,18 +33,40 @@ const Hotels = () => {
 
       <Title>Our hotels</Title>
 
-      {hotels.map((hotel) => {
-        const {
-          id,
-          attributes: { name },
-        } = hotel;
+      <div className={styles.Hotels}>
+        {hotels.map((hotel) => {
+          const {
+            id,
+            attributes: { name, image },
+          } = hotel;
 
-        return (
-          <NextLink key={id} href={{ pathname: '/hotels/[id]', query: { id } }}>
-            {name}
-          </NextLink>
-        );
-      })}
+          const imageUrl = image.data
+            ? image.data.attributes.formats.small.url
+            : '/placeholder.png';
+
+          return (
+            <NextLink
+              key={id}
+              href={{ pathname: '/hotels/[id]', query: { id } }}
+            >
+              <div className={styles.Hotel}>
+                <SubTitle>{name}</SubTitle>
+
+                <Image
+                  src={imageUrl}
+                  alt="A picture of the hotel"
+                  width={300}
+                  height={300}
+                />
+
+                <div className={styles.HoteInfo}>
+                  <div></div>
+                </div>
+              </div>
+            </NextLink>
+          );
+        })}
+      </div>
     </Page>
   );
 };

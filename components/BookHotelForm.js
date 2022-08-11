@@ -75,17 +75,35 @@ const BookHotelForm = ({
 
   return (
     <form className={styles.Form} onSubmit={handleSubmit(onSubmit)}>
-      {errors.email && <span>{errors.email.message}</span>}
-      <Input placeholder="Email" {...register('email')} />
+      <Input
+        title="Email"
+        error={errors.email}
+        placeholder="Email"
+        {...register('email')}
+      />
 
-      {errors.fromDate && <span>{errors.fromDate.message}</span>}
-      <Input type="date" placeholder="From" {...register('fromDate')} />
+      <Input
+        title="From"
+        error={errors.fromDate}
+        type="date"
+        placeholder="From"
+        {...register('fromDate')}
+      />
 
-      {errors.toDate && <span>{errors.toDate.message}</span>}
-      <Input type="date" placeholder="To" {...register('toDate')} />
+      <Input
+        title="To"
+        error={errors.toDate}
+        type="date"
+        placeholder="To"
+        {...register('toDate')}
+      />
 
-      {errors.rooms && <span>{errors.rooms.message}</span>}
-      <Input placeholder="Rooms" {...register('rooms')} />
+      <Input
+        title="Rooms"
+        error={errors.rooms}
+        placeholder="Rooms"
+        {...register('rooms')}
+      />
 
       {isToDateAfterFromDate && <>Current booking price: {bookingPrice}</>}
 

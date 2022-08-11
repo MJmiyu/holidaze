@@ -6,8 +6,6 @@ import { HolidazeHead } from '../../components/Head';
 import { useAPI } from '../../util/APIContext';
 import { useState } from 'react';
 import BookHotelForm from '../../components/BookHotelForm';
-import { STRAPI_URL } from '../../constants/strapi';
-import urlJoin from 'url-join';
 import Image from 'next/image';
 import Loading from '../../components/Loading';
 import Button from '../../components/Button';
@@ -57,7 +55,7 @@ const Hotel = () => {
       {imageUrl && (
         <Image
           alt=""
-          src={urlJoin(STRAPI_URL, image.data.attributes.url)}
+          src={image.data.attributes.url}
           width={300}
           height={200}
         />

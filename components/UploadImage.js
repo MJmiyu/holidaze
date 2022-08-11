@@ -1,7 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { STRAPI_URL } from '../constants/strapi';
 import styles from './UploadImage.module.css';
-import urlJoin from 'url-join';
 import Image from 'next/image';
 import Input from './Input';
 import Button from './Button';
@@ -33,12 +31,7 @@ const UploadImage = ({ image, setFile }) => {
     <div className={styles.UploadImageContainer}>
       {!showUpload && (
         <>
-          <Image
-            alt=""
-            src={urlJoin(STRAPI_URL, imageUrl)}
-            width={width}
-            height={height}
-          />
+          <Image alt="" src={imageUrl} width={width} height={height} />
 
           <Button onClick={() => setShowUpload(true)}>Edit</Button>
         </>

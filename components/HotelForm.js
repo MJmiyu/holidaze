@@ -19,6 +19,12 @@ const schema = yup.object().shape({
     .typeError('Must be a number')
     .positive('Must be greater than 0')
     .required('Enter a price'),
+  stars: yup
+    .number()
+    .min(1, 'Must be a number between 1 and 5')
+    .max(5, 'Must be a number between 1 and 5')
+    .typeError('Must be a number')
+    .required('Enter a star rating'),
 });
 
 const HotelForm = ({ hotel }) => {
@@ -39,6 +45,7 @@ const HotelForm = ({ hotel }) => {
       description: editing ? hotel.attributes.description : '',
       address: editing ? hotel.attributes.address : '',
       price: editing ? hotel.attributes.price : 1000,
+      stars: editing ? hotel.attributes.stars : 3,
     },
   });
 
@@ -98,20 +105,40 @@ const HotelForm = ({ hotel }) => {
   return (
     <div className={styles.FormContainer}>
       <form className={styles.Form} onSubmit={handleSubmit(onSubmit)}>
-        {errors.name && <span>{errors.name.message}</span>}
-        <Input placeholder="Enter the hotel name here" {...register('name')} />
+        <Input
+          title="Name"
+          error={errors.name}
+          placeholder="Name"
+          {...register('name')}
+        />
 
-        {errors.description && <span>{errors.description.message}</span>}
         <Textarea
-          placeholder="Enter a description here"
+          title="Description"
+          error={errors.description}
+          placeholder="Description"
           {...register('description')}
         />
 
-        {errors.address && <span>{errors.address.message}</span>}
-        <Input placeholder="Enter an address here" {...register('address')} />
+        <Input
+          title="Address"
+          error={errors.address}
+          placeholder="Address"
+          {...register('address')}
+        />
 
-        {errors.price && <span>{errors.price.message}</span>}
-        <Input placeholder="Enter a price here" {...register('price')} />
+        <Input
+          title="Price"
+          error={errors.price}
+          placeholder="Price"
+          {...register('price')}
+        />
+
+        <Input
+          title="Stars"
+          error={errors.stars}
+          placeholder="Star rating"
+          {...register('stars')}
+        />
 
         <Button>Save</Button>
       </form>

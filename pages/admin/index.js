@@ -40,11 +40,20 @@ const LoginPage = () => {
       <Title>Holidaze admin login</Title>
 
       <form className={styles.Form} onSubmit={handleSubmit(onSubmit)}>
-        {errors.name && <span>{errors.username.message}</span>}
-        <Input placeholder="Username" {...register('username')} />
+        <Input
+          title="Username"
+          placeholder="Username"
+          error={errors.name}
+          {...register('username')}
+        />
 
-        {errors.email && <span>{errors.password.message}</span>}
-        <Input placeholder="Password" {...register('password')} />
+        <Input
+          type="password"
+          title="Password"
+          placeholder="Password"
+          error={errors.password}
+          {...register('password')}
+        />
 
         <Button>Login</Button>
       </form>
