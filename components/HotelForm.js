@@ -27,7 +27,7 @@ const schema = yup.object().shape({
     .required('Enter a star rating'),
 });
 
-const HotelForm = ({ hotel }) => {
+const HotelForm = ({ hotel, mutate }) => {
   const [file, setFile] = useState();
 
   const editing = !!hotel;
@@ -65,12 +65,12 @@ const HotelForm = ({ hotel }) => {
           }
         }
 
-        window.location.reload();
+        mutate();
       } else {
         console.error('Failed creating hotel');
       }
     },
-    [hotel, authPut, uploadImage, deleteImage]
+    [hotel, authPut, uploadImage, deleteImage, mutate]
   );
 
   const createHotel = useCallback(
@@ -108,8 +108,9 @@ const HotelForm = ({ hotel }) => {
       !window.confirm(
         `Are you sure you want to delete ${hotel.attributes.name}?`
       )
-    )
+    ) {
       return;
+    }
 
     const result = await authDelete('hotels', hotel.id);
 
@@ -167,9 +168,11 @@ const HotelForm = ({ hotel }) => {
             Cancel
           </Button>
 
-          <Button type="button" color="red" onClick={onDeleteHotel}>
-            Delete
-          </Button>
+          {editing && (
+            <Button type="button" color="red" onClick={onDeleteHotel}>
+              Delete
+            </Button>
+          )}
         </div>
       </form>
 

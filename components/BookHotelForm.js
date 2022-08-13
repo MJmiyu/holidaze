@@ -49,7 +49,7 @@ const tomorrow = () => {
 
 const BookHotelForm = ({
   hotel: {
-    attributes: { price },
+    attributes: { price, name },
   },
 }) => {
   const {
@@ -82,13 +82,17 @@ const BookHotelForm = ({
 
   const onSubmit = useCallback(
     async (data) => {
-      const result = await post('bookings', data);
+      const result = await post('bookings', {
+        ...data,
+        price: bookingPrice,
+        hotelName: name,
+      });
 
       if (!result) {
         console.error('Failed sending messages');
       }
     },
-    [post]
+    [post, bookingPrice, name]
   );
 
   return (

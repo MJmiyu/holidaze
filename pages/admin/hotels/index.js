@@ -14,11 +14,14 @@ import Stars from '../../../components/Stars';
 import Button from '../../../components/Button';
 import SubTitle from '../../../components/SubTitle';
 import { useCallback } from 'react';
+import { useRouter } from 'next/router';
 
 const Hotels = () => {
   const { authGet, authDelete } = useAuthAPI();
 
-  const { data, error } = useSWR('hotels', authGet);
+  const router = useRouter();
+
+  const { data, error, mutate } = useSWR('hotels', authGet);
 
   const onDeleteHotel = useCallback(
     async (hotel) => {
@@ -26,17 +29,22 @@ const Hotels = () => {
         !window.confirm(
           `Are you sure you want to delete ${hotel.attributes.name}?`
         )
-      )
+      ) {
         return;
+      }
 
       const result = await authDelete('hotels', hotel.id);
 
       if (result) {
-        window.location.reload();
+        mutate();
       }
     },
-    [authDelete]
+    [authDelete, mutate]
   );
+
+  const onCreateHotel = useCallback(() => {
+    router.push('/admin/hotels/create');
+  }, [router]);
 
   if (!data) {
     return <Loading />;
@@ -56,6 +64,8 @@ const Hotels = () => {
 
       <Title>Hotels</Title>
 
+      <Button onClick={onCreateHotel}>Create hotel</Button>
+
       <div className={styles.Hotels}>
         {hotels.map((hotel) => {
           const {
@@ -64,7 +74,7 @@ const Hotels = () => {
           } = hotel;
 
           return (
-            <div className={styles.Hotel}>
+            <div key={id} className={styles.Hotel}>
               <SubTitle>{name}</SubTitle>
 
               <Stars stars={stars} />

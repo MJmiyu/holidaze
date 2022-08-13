@@ -5,4 +5,4 @@ export const STRAPI_URL =
 
 export const STRAPI_API_URL = STRAPI_URL + 'api/';
 
-export const STRAPI_POPULATE_PARAMS = qs.stringify({ populate: '*' });
+export const STRAPI_PARAMS = qs.stringify({ populate: '*', sort: 'id' });

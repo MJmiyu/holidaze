@@ -26,6 +26,25 @@ const Home = () => {
         width={1024}
         height={681}
       />
+
+      <Paragraph>
+        &quot;
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.flickr.com/photos/54765068@N00/4390667762"
+        >
+          lille lungegårdsvann, bergen
+        </a>
+        &quot; by{' '}
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.flickr.com/photos/54765068@N00"
+        >
+          vidart
+        </a>
+      </Paragraph>
     </Page>
   );
 };

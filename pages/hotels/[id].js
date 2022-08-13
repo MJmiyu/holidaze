@@ -33,7 +33,7 @@ const Hotel = () => {
 
   const openModal = useCallback(() => {
     setShowModal(true);
-  });
+  }, []);
 
   if (!data) {
     return <Loading />;

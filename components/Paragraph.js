@@ -1,7 +1,12 @@
 import styles from './Paragraph.module.css';
+import cn from 'classnames';
 
-const Paragraph = ({ children }) => {
-  return <p className={styles.Paragraph}>{children}</p>;
+const Paragraph = ({ className, children }) => {
+  return (
+    <p className={cn(styles.Paragraph, { [className]: !!className })}>
+      {children}
+    </p>
+  );
 };
 
 export default Paragraph;

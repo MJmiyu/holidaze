@@ -6,7 +6,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { STRAPI_API_URL, STRAPI_POPULATE_PARAMS } from '../constants/strapi';
+import { STRAPI_API_URL, STRAPI_PARAMS } from '../constants/strapi';
 import { isLocal } from './isLocal';
 import urlJoin from 'url-join';
 
@@ -82,7 +82,7 @@ export const AuthAPIProvider = ({ children }) => {
   const authGet = useCallback(
     async (url) => {
       const response = await fetch(
-        urlJoin(STRAPI_API_URL, url, '?' + STRAPI_POPULATE_PARAMS),
+        urlJoin(STRAPI_API_URL, url, '?' + STRAPI_PARAMS),
         {
           headers: {
             Authorization: `Bearer ${jwt}`,

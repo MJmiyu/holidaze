@@ -1,4 +1,29 @@
-.form {
+.Bookings {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  padding: 0 25px 25px;
+}
+
+.Booking {
+  display: grid;
+  grid-template-columns: minmax(100px, 1fr) minmax(100px, 2fr) 90px 90px 60px 80px 100px;
+  align-items: center;
+  border-bottom: 1px solid #19bfba;
+  padding: 10px;
+}
+
+.Booking:hover {
+  background-color: #19bfba22;
+}
+
+.Booking > div {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.DeleteBookingColumn {
+  display: flex;
+  justify-content: flex-end;
 }

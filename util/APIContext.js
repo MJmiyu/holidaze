@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { createContext, useCallback, useContext } from 'react';
-import { STRAPI_POPULATE_PARAMS, STRAPI_API_URL } from '../constants/strapi';
+import { STRAPI_PARAMS, STRAPI_API_URL } from '../constants/strapi';
 import urlJoin from 'url-join';
 
 const APIContext = createContext(async () => {});
@@ -11,7 +11,7 @@ export const APIProvider = ({ children }) => {
   const get = useCallback(
     async (url) => {
       const response = await fetch(
-        urlJoin(STRAPI_API_URL, url, '?' + STRAPI_POPULATE_PARAMS)
+        urlJoin(STRAPI_API_URL, url, '?' + STRAPI_PARAMS)
       );
 
       if (response.status === 404) {

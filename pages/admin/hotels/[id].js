@@ -15,7 +15,7 @@ const EditHotel = () => {
 
   const { authGet } = useAuthAPI();
 
-  const { data, error } = useSWR('hotels/' + id, authGet);
+  const { data, error, mutate } = useSWR('hotels/' + id, authGet);
 
   if (!data) {
     return <Loading />;
@@ -35,7 +35,7 @@ const EditHotel = () => {
 
       <Title>Edit hotel</Title>
 
-      <HotelForm hotel={hotel} />
+      <HotelForm hotel={hotel} mutate={mutate} />
     </Page>
   );
 };
