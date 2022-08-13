@@ -4,13 +4,18 @@ import Nav from '../../components/Nav';
 import useSWR from 'swr';
 import { HolidazeHead } from '../../components/Head';
 import { useAPI } from '../../util/APIContext';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import BookHotelForm from '../../components/BookHotelForm';
-import Image from 'next/image';
 import Loading from '../../components/Loading';
 import Button from '../../components/Button';
 import Page from '../../components/Page';
 import Title from '../../components/Title';
+import Modal from '../../components/Modal';
+import Stars from '../../components/Stars';
+import Paragraph from '../../components/Paragraph';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import HotelImage from '../../components/HotelImage';
 
 const Hotel = () => {
   const [showModal, setShowModal] = useState(false);
@@ -21,6 +26,14 @@ const Hotel = () => {
   const { get } = useAPI();
 
   const { data, error } = useSWR('hotels/' + id, get);
+
+  const closeModal = useCallback(() => {
+    setShowModal(false);
+  }, []);
+
+  const openModal = useCallback(() => {
+    setShowModal(true);
+  });
 
   if (!data) {
     return <Loading />;
@@ -33,10 +46,12 @@ const Hotel = () => {
   const hotel = data.data;
 
   const {
-    attributes: { name, description, address, price, image },
+    attributes: { name, stars, description, address, price, image },
   } = hotel;
 
-  const imageUrl = image.data ? image.data.attributes.url : null;
+  const imageUrl = image.data
+    ? image.data.attributes.formats.small.url
+    : '/placeholder.png';
 
   return (
     <Page>
@@ -46,28 +61,35 @@ const Hotel = () => {
 
       <Title>{name}</Title>
 
-      {/* Hotel with id : {id}
-      Name: {name}
-      Description: {description}
-      Address: {address}
-      Price: {price} */}
-
-      {imageUrl && (
-        <Image
-          alt=""
-          src={image.data.attributes.url}
-          width={300}
-          height={200}
+      <div className={styles.HotelContainer}>
+        <HotelImage
+          alt="Image of the hotel"
+          src={imageUrl}
+          width={500}
+          height={500}
         />
-      )}
 
-      <Button onClick={() => setShowModal(true)}>Book room</Button>
+        <Paragraph>{description}</Paragraph>
+
+        <Paragraph>
+          <FontAwesomeIcon icon={faLocationDot} /> {address}
+        </Paragraph>
+
+        <div className={styles.HotelInfo}>
+          <Stars stars={stars} />
+
+          <Paragraph>
+            Price: <span className={styles.Bold}>{price}</span> NOK
+          </Paragraph>
+
+          <Button onClick={openModal}>Book room</Button>
+        </div>
+      </div>
 
       {showModal && (
-        <>
+        <Modal onClose={closeModal}>
           <BookHotelForm hotel={hotel} />
-          <Button onClick={() => setShowModal(false)}>Close</Button>
-        </>
+        </Modal>
       )}
     </Page>
   );

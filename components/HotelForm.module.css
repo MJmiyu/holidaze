@@ -12,3 +12,9 @@
   align-items: center;
   gap: 5px;
 }
+
+.ButtonContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}

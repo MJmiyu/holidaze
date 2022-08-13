@@ -27,6 +27,7 @@
   font-size: 18px;
   gap: 5px;
   text-overflow: ellipsis;
+  z-index: 1;
 }
 
 .SearchResult {

@@ -2,10 +2,9 @@ import { HolidazeHead } from '../components/Head';
 import Nav from '../components/Nav';
 import styles from '../styles/Home.module.css';
 import Title from '../components/Title';
-
-import Image from 'next/image';
 import Paragraph from '../components/Paragraph';
 import Page from '../components/Page';
+import HotelImage from '../components/HotelImage';
 
 const Home = () => {
   return (
@@ -21,8 +20,7 @@ const Home = () => {
         lovely Bergen.
       </Paragraph>
 
-      <Image
-        className={styles.FrontImage}
+      <HotelImage
         src="/bergen_frontpage.jpg"
         alt="A picture of Bergen"
         width={1024}

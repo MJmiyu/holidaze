@@ -44,6 +44,12 @@ const Search = () => {
     setQuery(query);
   }, []);
 
+  const resetSearch = useCallback(() => {
+    setQuery('');
+    setHotels([]);
+    setLoading(false);
+  }, []);
+
   return (
     <div className={styles.SearchContainer}>
       <input
@@ -61,6 +67,7 @@ const Search = () => {
               <NextLink
                 className={styles.SearchResult}
                 key={hotel.id}
+                onClick={resetSearch}
                 href={{
                   pathname: '/hotels/[id]',
                   query: { id: hotel.id },

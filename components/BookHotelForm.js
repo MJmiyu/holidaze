@@ -1,10 +1,16 @@
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import styles from './BookHotelForm.module.css';
 import { useAPI } from '../util/APIContext';
-import { format, addDays, differenceInDays, isAfter } from 'date-fns';
+import {
+  format,
+  addDays,
+  addSeconds,
+  differenceInDays,
+  isAfter,
+} from 'date-fns';
 import Input from './Input';
 import Button from './Button';
 
@@ -14,7 +20,19 @@ const schema = yup.object().shape({
     .required('Enter an email address')
     .email('Enter a valid email address'),
   fromDate: yup.date().required('Enter when you are booking from'),
-  toDate: yup.date().required('Enter when you are booking to'),
+  toDate: yup
+    .date()
+    .required('Enter when you are booking to')
+    .test(
+      'toDateBeforeFromDate',
+      'To date needs to be after from date',
+      (value, context) => {
+        return isAfter(
+          addSeconds(new Date(value), 1),
+          new Date(context.parent.fromDate)
+        );
+      }
+    ),
   rooms: yup.number().required('Enter the number of rooms your are booking'),
 });
 
@@ -51,14 +69,14 @@ const BookHotelForm = ({
 
   const { fromDate, toDate, rooms } = watch();
 
+  const isFromDateAfterToDate = useMemo(() => {
+    return isAfter(new Date(fromDate), addSeconds(new Date(toDate), 1));
+  }, [toDate, fromDate]);
+
   const bookingPrice = useMemo(() => {
-    const days = differenceInDays(new Date(toDate), new Date(fromDate));
+    const days = differenceInDays(new Date(toDate), new Date(fromDate)) + 1;
     return days * price * rooms;
   }, [fromDate, toDate, rooms, price]);
-
-  const isToDateAfterFromDate = useMemo(() => {
-    return isAfter(new Date(toDate), new Date(fromDate));
-  }, [toDate, fromDate]);
 
   const { post } = useAPI();
 
@@ -74,7 +92,7 @@ const BookHotelForm = ({
   );
 
   return (
-    <form className={styles.Form} onSubmit={handleSubmit(onSubmit)}>
+    <form className={styles.BookHotelForm} onSubmit={handleSubmit(onSubmit)}>
       <Input
         title="Email"
         error={errors.email}
@@ -105,7 +123,9 @@ const BookHotelForm = ({
         {...register('rooms')}
       />
 
-      {isToDateAfterFromDate && <>Current booking price: {bookingPrice}</>}
+      <div className={styles.BookingPrice}>
+        {isFromDateAfterToDate ? '-' : `Current price: ${bookingPrice} NOK`}
+      </div>
 
       <Button>Order</Button>
     </form>

@@ -49,7 +49,8 @@ const HotelForm = ({ hotel }) => {
     },
   });
 
-  const { authPost, authPut, uploadImage, deleteImage } = useAuthAPI();
+  const { authPost, authPut, authDelete, uploadImage, deleteImage } =
+    useAuthAPI();
 
   const editHotel = useCallback(
     async (data, file) => {
@@ -102,6 +103,25 @@ const HotelForm = ({ hotel }) => {
     [editing, file, editHotel, createHotel]
   );
 
+  const onDeleteHotel = useCallback(async () => {
+    if (
+      !window.confirm(
+        `Are you sure you want to delete ${hotel.attributes.name}?`
+      )
+    )
+      return;
+
+    const result = await authDelete('hotels', hotel.id);
+
+    if (result) {
+      router.push('/admin/hotels');
+    }
+  }, [authDelete, hotel, router]);
+
+  const onCancel = useCallback(() => {
+    router.push('/admin/hotels');
+  }, [router]);
+
   return (
     <div className={styles.FormContainer}>
       <form className={styles.Form} onSubmit={handleSubmit(onSubmit)}>
@@ -140,7 +160,17 @@ const HotelForm = ({ hotel }) => {
           {...register('stars')}
         />
 
-        <Button>Save</Button>
+        <div className={styles.ButtonContainer}>
+          <Button>Save</Button>
+
+          <Button type="button" color="gray" onClick={onCancel}>
+            Cancel
+          </Button>
+
+          <Button type="button" color="red" onClick={onDeleteHotel}>
+            Delete
+          </Button>
+        </div>
       </form>
 
       <UploadImage

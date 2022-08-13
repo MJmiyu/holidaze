@@ -8,8 +8,9 @@ import NextLink from '../../components/NextLink';
 import Page from '../../components/Page';
 import Title from '../../components/Title';
 import SubTitle from '../../components/SubTitle';
-import Image from 'next/image';
 import Stars from '../../components/Stars';
+import Paragraph from '../../components/Paragraph';
+import HotelImage from '../../components/HotelImage';
 
 const Hotels = () => {
   const { get } = useAPI();
@@ -53,15 +54,23 @@ const Hotels = () => {
               <div className={styles.Hotel}>
                 <SubTitle>{name}</SubTitle>
 
-                <Image
+                <HotelImage
                   src={imageUrl}
                   alt="A picture of the hotel"
                   width={300}
                   height={300}
                 />
 
-                <div className={styles.HoteInfo}>
+                <div className={styles.HotelInfo}>
                   <Stars stars={hotel.attributes.stars} />
+
+                  <Paragraph>
+                    Price:{' '}
+                    <span className={styles.Bold}>
+                      {hotel.attributes.price}
+                    </span>{' '}
+                    NOK
+                  </Paragraph>
                 </div>
               </div>
             </NextLink>

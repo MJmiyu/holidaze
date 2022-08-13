@@ -168,6 +168,34 @@ export const AuthAPIProvider = ({ children }) => {
     [router, jwt, resetJwt]
   );
 
+  const authDelete = useCallback(
+    async (url, id) => {
+      try {
+        const response = await fetch(
+          urlJoin(STRAPI_API_URL, url, id.toString()),
+          {
+            method: 'DELETE',
+            headers: {
+              Accept: 'application/json',
+              Authorization: `Bearer ${jwt}`,
+            },
+          }
+        );
+
+        if (response.status === 403 || response.status === 401) {
+          resetJwt();
+          router.push('/admin');
+        }
+
+        const json = await response.json();
+        return json;
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    [router, jwt, resetJwt]
+  );
+
   const uploadImage = useCallback(
     async (image, id) => {
       const form = new FormData();
@@ -209,6 +237,7 @@ export const AuthAPIProvider = ({ children }) => {
     authGet,
     authPost,
     authPut,
+    authDelete,
     uploadImage,
     deleteImage,
   };

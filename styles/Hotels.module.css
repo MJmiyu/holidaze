@@ -14,5 +14,15 @@
   border: 1px solid #19bfba;
   border-radius: 5px;
   padding: 15px;
-  gap: 5px;
+  gap: 10px;
+}
+
+.HotelInfo {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.Bold {
+  font-weight: 600;
 }
