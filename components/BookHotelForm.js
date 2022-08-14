@@ -99,7 +99,7 @@ const BookHotelForm = ({
         onError();
       }
     },
-    [post, bookingPrice, name, submitting]
+    [post, bookingPrice, name, submitting, onBooking, onError]
   );
 
   return (

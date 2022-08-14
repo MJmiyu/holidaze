@@ -40,7 +40,7 @@ const LoginPage = () => {
 
       setSubmitting(false);
     },
-    [login]
+    [login, submitting]
   );
 
   return (
