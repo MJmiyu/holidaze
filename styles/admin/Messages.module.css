@@ -10,13 +10,12 @@
   grid-template-areas:
     'name email delete'
     'subject message message';
-  grid-template-columns: minmax(100px, 1fr) minmax(100px, 1fr) minmax(
-      100px,
-      1fr
-    );
-  align-items: center;
+  grid-template-columns:
+    minmax(100px, 1fr) minmax(100px, 1fr)
+    100px;
   border-bottom: 1px solid #19bfba;
   padding: 10px;
+  gap: 10px;
 }
 
 .MessageRow:hover {

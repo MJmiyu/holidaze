@@ -1,9 +1,10 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import useSWR from 'swr';
 import AdminNav from '../../components/AdminNav';
 import Button from '../../components/Button';
 import { HolidazeAdminHead } from '../../components/Head';
 import Loading from '../../components/Loading';
+import Notification from '../../components/Notification';
 import Page from '../../components/Page';
 import Paragraph from '../../components/Paragraph';
 import Title from '../../components/Title';
@@ -11,6 +12,8 @@ import styles from '../../styles/admin/Messages.module.css';
 import { useAuthAPI } from '../../util/AuthAPIContext';
 
 const Messages = () => {
+  const [notification, setNotification] = useState();
+
   const { authGet, authDelete } = useAuthAPI();
 
   const { data, error, mutate } = useSWR('messages', authGet);
@@ -23,7 +26,11 @@ const Messages = () => {
       const result = await authDelete('/messages', id);
 
       if (result) {
+        setNotification({ message: 'Booking deleted' });
+
         mutate();
+      } else {
+        setNotification({ type: 'error', message: 'Deleting message failed' });
       }
     },
     [authDelete, mutate]
@@ -56,9 +63,13 @@ const Messages = () => {
 
           return (
             <div className={styles.MessageRow} key={message.id}>
-              <div className={styles.Name}>{name}</div>
+              <div className={styles.Name} title={name}>
+                {name}
+              </div>
 
-              <div className={styles.Email}>{email}</div>
+              <div className={styles.Email} title={email}>
+                {email}
+              </div>
 
               <Paragraph className={styles.Subject}>
                 Subject: {subject}
@@ -75,6 +86,13 @@ const Messages = () => {
           );
         })}
       </div>
+
+      {notification && (
+        <Notification
+          notification={notification}
+          onClose={() => setNotification(null)}
+        />
+      )}
     </Page>
   );
 };

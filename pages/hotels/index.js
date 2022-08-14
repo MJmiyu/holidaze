@@ -33,7 +33,7 @@ const Hotels = () => {
 
       <Nav />
 
-      <Title>Our hotels</Title>
+      <Title>Holidaze hotels</Title>
 
       <div className={styles.Hotels}>
         {hotels.map((hotel) => {

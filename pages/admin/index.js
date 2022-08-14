@@ -2,7 +2,7 @@ import { HolidazeAdminHead } from '../../components/Head';
 import styles from '../../styles/admin/Login.module.css';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAuthAPI } from '../../util/AuthAPIContext';
 import Input from '../../components/Input';
@@ -16,6 +16,8 @@ const schema = yup.object().shape({
 });
 
 const LoginPage = () => {
+  const [submitting, setSubmitting] = useState(false);
+
   const { login } = useAuthAPI();
 
   const {
@@ -27,8 +29,16 @@ const LoginPage = () => {
   });
 
   const onSubmit = useCallback(
-    ({ username, password }) => {
+    async ({ username, password }) => {
+      if (submitting) {
+        return;
+      }
+
+      setSubmitting(true);
+
       login(username, password);
+
+      setSubmitting(false);
     },
     [login]
   );

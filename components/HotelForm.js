@@ -9,6 +9,7 @@ import UploadImage from './UploadImage';
 import Input from './Input';
 import Button from './Button';
 import Textarea from './Textarea';
+import Notification from './Notification';
 
 const schema = yup.object().shape({
   name: yup.string().required('Enter the hotel name'),
@@ -28,6 +29,8 @@ const schema = yup.object().shape({
 });
 
 const HotelForm = ({ hotel, mutate }) => {
+  const [notification, setNotification] = useState();
+  const [submitting, setSubmitting] = useState(false);
   const [file, setFile] = useState();
 
   const editing = !!hotel;
@@ -37,6 +40,7 @@ const HotelForm = ({ hotel, mutate }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -65,9 +69,11 @@ const HotelForm = ({ hotel, mutate }) => {
           }
         }
 
+        setNotification({ message: 'Hotel saved' });
+
         mutate();
       } else {
-        console.error('Failed creating hotel');
+        setNotification({ type: 'error', message: 'Saving hotel failed' });
       }
     },
     [hotel, authPut, uploadImage, deleteImage, mutate]
@@ -84,23 +90,33 @@ const HotelForm = ({ hotel, mutate }) => {
           await uploadImage(file, hotelId);
         }
 
-        router.push('/admin/hotels/' + hotelId);
+        setNotification({ message: 'Hotel created' });
+
+        reset();
       } else {
-        console.error('Failed creating hotel');
+        setNotification({ type: 'error', message: 'Failed creating hotel' });
       }
     },
-    [authPost, uploadImage, router]
+    [authPost, uploadImage, reset]
   );
 
   const onSubmit = useCallback(
-    (data) => {
-      if (editing) {
-        editHotel(data, file);
-      } else {
-        createHotel(data, file);
+    async (data) => {
+      if (submitting) {
+        return;
       }
+
+      setSubmitting(true);
+
+      if (editing) {
+        await editHotel(data, file);
+      } else {
+        await createHotel(data, file);
+      }
+
+      setSubmitting(false);
     },
-    [editing, file, editHotel, createHotel]
+    [editing, file, editHotel, createHotel, submitting]
   );
 
   const onDeleteHotel = useCallback(async () => {
@@ -180,6 +196,13 @@ const HotelForm = ({ hotel, mutate }) => {
         image={editing ? hotel.attributes.image.data : undefined}
         setFile={setFile}
       />
+
+      {notification && (
+        <Notification
+          notification={notification}
+          onClose={() => setNotification(null)}
+        />
+      )}
     </div>
   );
 };

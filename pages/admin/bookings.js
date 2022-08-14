@@ -6,12 +6,14 @@ import { useAuthAPI } from '../../util/AuthAPIContext';
 import styles from '../../styles/admin/Bookings.module.css';
 import Page from '../../components/Page';
 import Title from '../../components/Title';
-import Paragraph from '../../components/Paragraph';
 import Button from '../../components/Button';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { format } from 'date-fns';
+import Notification from '../../components/Notification';
 
 const Bookings = () => {
+  const [notification, setNotification] = useState();
+
   const { authGet, authDelete } = useAuthAPI();
 
   const { data, error, mutate } = useSWR('bookings', authGet);
@@ -24,7 +26,11 @@ const Bookings = () => {
       const result = await authDelete('/bookings', id);
 
       if (result) {
+        setNotification({ message: 'Booking deleted' });
+
         mutate();
+      } else {
+        setNotification({ type: 'error', message: 'Deleting booking failed' });
       }
     },
     [authDelete, mutate]
@@ -70,9 +76,9 @@ const Bookings = () => {
 
           return (
             <div className={styles.Booking} key={id}>
-              <div>{hotelName}</div>
+              <div title={hotelName}>{hotelName}</div>
 
-              <div>{email}</div>
+              <div title={email}>{email}</div>
 
               <div>{format(new Date(fromDate), 'yyyy-MM-dd')}</div>
 
@@ -91,6 +97,13 @@ const Bookings = () => {
           );
         })}
       </div>
+
+      {notification && (
+        <Notification
+          notification={notification}
+          onClose={() => setNotification(null)}
+        />
+      )}
     </Page>
   );
 };

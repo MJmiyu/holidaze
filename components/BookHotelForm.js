@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import styles from './BookHotelForm.module.css';
 import { useAPI } from '../util/APIContext';
 import {
@@ -13,6 +13,7 @@ import {
 } from 'date-fns';
 import Input from './Input';
 import Button from './Button';
+import Notification from './Notification';
 
 const schema = yup.object().shape({
   email: yup
@@ -25,7 +26,7 @@ const schema = yup.object().shape({
     .required('Enter when you are booking to')
     .test(
       'toDateBeforeFromDate',
-      'To date needs to be after from date',
+      'Needs to be after the start date',
       (value, context) => {
         return isAfter(
           addSeconds(new Date(value), 1),
@@ -33,7 +34,10 @@ const schema = yup.object().shape({
         );
       }
     ),
-  rooms: yup.number().required('Enter the number of rooms your are booking'),
+  rooms: yup
+    .number()
+    .typeError('Must be a number')
+    .required('Enter the number of rooms your are booking'),
 });
 
 const today = () => {
@@ -51,7 +55,11 @@ const BookHotelForm = ({
   hotel: {
     attributes: { price, name },
   },
+  onBooking,
+  onError,
 }) => {
+  const [submitting, setSubmitting] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -82,17 +90,26 @@ const BookHotelForm = ({
 
   const onSubmit = useCallback(
     async (data) => {
+      if (submitting) {
+        return;
+      }
+
+      setSubmitting(true);
       const result = await post('bookings', {
         ...data,
         price: bookingPrice,
         hotelName: name,
       });
 
-      if (!result) {
-        console.error('Failed sending messages');
+      setSubmitting(false);
+
+      if (result) {
+        onBooking();
+      } else {
+        onError();
       }
     },
-    [post, bookingPrice, name]
+    [post, bookingPrice, name, submitting]
   );
 
   return (

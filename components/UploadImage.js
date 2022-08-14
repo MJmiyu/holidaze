@@ -3,6 +3,7 @@ import styles from './UploadImage.module.css';
 import Image from 'next/image';
 import Input from './Input';
 import Button from './Button';
+import InputTitle from './InputTitle';
 
 const UploadImage = ({ image, setFile }) => {
   const [showUpload, setShowUpload] = useState(!image);
@@ -29,9 +30,16 @@ const UploadImage = ({ image, setFile }) => {
 
   return (
     <div className={styles.UploadImageContainer}>
+      <InputTitle title="Image" />
+
       {!showUpload && (
         <>
-          <Image alt="" src={imageUrl} width={width} height={height} />
+          <Image
+            alt="Uploaded hotel image"
+            src={imageUrl}
+            width={width}
+            height={height}
+          />
 
           <Button onClick={() => setShowUpload(true)}>Edit</Button>
         </>

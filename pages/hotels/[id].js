@@ -16,9 +16,11 @@ import Paragraph from '../../components/Paragraph';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import HotelImage from '../../components/HotelImage';
+import Notification from '../../components/Notification';
 
 const Hotel = () => {
   const [showModal, setShowModal] = useState(false);
+  const [notification, setNotification] = useState();
 
   const router = useRouter();
   const { id } = router.query;
@@ -34,6 +36,16 @@ const Hotel = () => {
   const openModal = useCallback(() => {
     setShowModal(true);
   }, []);
+
+  const onBooking = useCallback(() => {
+    setNotification({ message: 'Booking succsessful' });
+    closeModal();
+  }, [closeModal]);
+
+  const onError = useCallback(() => {
+    setNotification({ type: 'error', message: 'Booking failed' });
+    closeModal();
+  }, [closeModal]);
 
   if (!data) {
     return <Loading />;
@@ -88,8 +100,19 @@ const Hotel = () => {
 
       {showModal && (
         <Modal onClose={closeModal}>
-          <BookHotelForm hotel={hotel} />
+          <BookHotelForm
+            hotel={hotel}
+            onBooking={onBooking}
+            onError={onError}
+          />
         </Modal>
+      )}
+
+      {notification && (
+        <Notification
+          notification={notification}
+          onClose={() => setNotification(null)}
+        />
       )}
     </Page>
   );

@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import styles from './ContactForm.module.css';
 import { useAPI } from '../util/APIContext';
 import Input from './Input';
@@ -19,6 +19,8 @@ const schema = yup.object().shape({
 });
 
 const ContactForm = () => {
+  const [submitting, setSubmitting] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -32,6 +34,12 @@ const ContactForm = () => {
 
   const onSubmit = useCallback(
     async (data) => {
+      if (submitting) {
+        return;
+      }
+
+      setSubmitting(true);
+
       const result = await post('messages', data);
 
       if (!result) {
@@ -40,8 +48,10 @@ const ContactForm = () => {
         reset();
         console.log('Add toast');
       }
+
+      setSubmitting(false);
     },
-    [post, reset]
+    [post, reset, submitting]
   );
 
   return (

@@ -23,8 +23,8 @@ const Home = () => {
       <HotelImage
         src="/bergen_frontpage.jpg"
         alt="A picture of Bergen"
-        width={1024}
-        height={681}
+        width={768}
+        height={511}
       />
 
       <Paragraph>
