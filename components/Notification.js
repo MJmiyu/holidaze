@@ -16,7 +16,7 @@ const Notification = ({ notification, onClose }) => {
     return () => {
       clearTimeout(timer);
     };
-  }, []);
+  }, [onClose]);
 
   return createPortal(
     <div

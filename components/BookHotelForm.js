@@ -4,16 +4,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useCallback, useMemo, useState } from 'react';
 import styles from './BookHotelForm.module.css';
 import { useAPI } from '../util/APIContext';
-import {
-  format,
-  addDays,
-  addSeconds,
-  differenceInDays,
-  isAfter,
-} from 'date-fns';
+import { format, addDays, differenceInDays, isAfter } from 'date-fns';
 import Input from './Input';
 import Button from './Button';
-import Notification from './Notification';
 
 const schema = yup.object().shape({
   email: yup
@@ -28,10 +21,7 @@ const schema = yup.object().shape({
       'toDateBeforeFromDate',
       'Needs to be after the start date',
       (value, context) => {
-        return isAfter(
-          addSeconds(new Date(value), 1),
-          new Date(context.parent.fromDate)
-        );
+        return isAfter(new Date(value), new Date(context.parent.fromDate));
       }
     ),
   rooms: yup
@@ -78,11 +68,11 @@ const BookHotelForm = ({
   const { fromDate, toDate, rooms } = watch();
 
   const isFromDateAfterToDate = useMemo(() => {
-    return isAfter(new Date(fromDate), addSeconds(new Date(toDate), 1));
+    return !isAfter(new Date(toDate), new Date(fromDate));
   }, [toDate, fromDate]);
 
   const bookingPrice = useMemo(() => {
-    const days = differenceInDays(new Date(toDate), new Date(fromDate)) + 1;
+    const days = differenceInDays(new Date(toDate), new Date(fromDate));
     return days * price * rooms;
   }, [fromDate, toDate, rooms, price]);
 
