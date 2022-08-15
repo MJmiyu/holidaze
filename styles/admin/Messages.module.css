@@ -49,3 +49,14 @@
 .Message {
   grid-area: message;
 }
+
+@media only screen and (max-width: 600px) {
+  .MessageRow {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .DeleteMessage {
+    justify-content: center;
+  }
+}

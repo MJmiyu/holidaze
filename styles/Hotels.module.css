@@ -26,3 +26,16 @@
 .Bold {
   font-weight: 600;
 }
+
+@media only screen and (max-width: 600px) {
+  .Hotels {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .HotelInfo {
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+}

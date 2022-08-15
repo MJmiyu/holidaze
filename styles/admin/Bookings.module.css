@@ -11,6 +11,7 @@
   align-items: center;
   border-bottom: 1px solid #19bfba;
   padding: 10px;
+  gap: 10px;
 }
 
 .Booking:hover {
@@ -21,9 +22,24 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  display: flex;
 }
 
 .DeleteBookingColumn {
   display: flex;
   justify-content: flex-end;
+}
+
+@media only screen and (max-width: 600px) {
+  .Bookings {
+    padding: 0;
+  }
+
+  .Booking {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .DeleteBookingColumn {
+    justify-content: flex-start;
+  }
 }

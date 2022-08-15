@@ -56,7 +56,7 @@ const ContactForm = () => {
 
   return (
     <>
-      <form className={styles.Form} onSubmit={handleSubmit(onSubmit)}>
+      <form className={styles.ContactForm} onSubmit={handleSubmit(onSubmit)}>
         <Input
           title="Name"
           error={errors.name}
