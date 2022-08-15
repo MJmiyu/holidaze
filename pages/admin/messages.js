@@ -1,13 +1,13 @@
 import { useCallback, useState } from 'react';
 import useSWR from 'swr';
-import AdminNav from '../../components/AdminNav';
-import Button from '../../components/Button';
-import { HolidazeAdminHead } from '../../components/Head';
-import Loading from '../../components/Loading';
-import Notification from '../../components/Notification';
-import Page from '../../components/Page';
-import Paragraph from '../../components/Paragraph';
-import Title from '../../components/Title';
+import AdminNav from '../../components/page/AdminNav';
+import Button from '../../components/inputs/Button';
+import { HolidazeAdminHead } from '../../components/page/Head';
+import Loading from '../../components/page/Loading';
+import Notification from '../../components/page/Notification';
+import Page from '../../components/page/Page';
+import Paragraph from '../../components/typography/Paragraph';
+import Title from '../../components/typography/Title';
 import styles from '../../styles/admin/Messages.module.css';
 import { useAuthAPI } from '../../util/AuthAPIContext';
 

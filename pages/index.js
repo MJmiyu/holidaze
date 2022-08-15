@@ -1,10 +1,9 @@
-import { HolidazeHead } from '../components/Head';
-import Nav from '../components/Nav';
-import styles from '../styles/Home.module.css';
-import Title from '../components/Title';
-import Paragraph from '../components/Paragraph';
-import Page from '../components/Page';
-import HotelImage from '../components/HotelImage';
+import { HolidazeHead } from '../components/page/Head';
+import Nav from '../components/page/Nav';
+import Title from '../components/typography/Title';
+import Paragraph from '../components/typography/Paragraph';
+import Page from '../components/page/Page';
+import HotelImage from '../components/page/HotelImage';
 
 const Home = () => {
   return (

@@ -1,15 +1,15 @@
 import useSWR from 'swr';
-import AdminNav from '../../components/AdminNav';
-import { HolidazeAdminHead } from '../../components/Head';
-import Loading from '../../components/Loading';
+import AdminNav from '../../components/page/AdminNav';
+import { HolidazeAdminHead } from '../../components/page/Head';
+import Loading from '../../components/page/Loading';
 import { useAuthAPI } from '../../util/AuthAPIContext';
 import styles from '../../styles/admin/Bookings.module.css';
-import Page from '../../components/Page';
-import Title from '../../components/Title';
-import Button from '../../components/Button';
+import Page from '../../components/page/Page';
+import Title from '../../components/typography/Title';
+import Button from '../../components/inputs/Button';
 import { useCallback, useState } from 'react';
 import { format } from 'date-fns';
-import Notification from '../../components/Notification';
+import Notification from '../../components/page/Notification';
 
 const Bookings = () => {
   const [notification, setNotification] = useState();

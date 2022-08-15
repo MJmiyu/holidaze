@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useAPI } from '../util/APIContext';
+import { useAPI } from '../../util/APIContext';
 import styles from './Search.module.css';
 import qs from 'qs';
-import NextLink from './NextLink';
+import NextLink from '../typography/NextLink';
 
 const Search = () => {
   const [query, setQuery] = useState('');

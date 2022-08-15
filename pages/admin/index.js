@@ -1,14 +1,14 @@
-import { HolidazeAdminHead } from '../../components/Head';
+import { HolidazeAdminHead } from '../../components/page/Head';
 import styles from '../../styles/admin/Login.module.css';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAuthAPI } from '../../util/AuthAPIContext';
-import Input from '../../components/Input';
-import Button from '../../components/Button';
-import Page from '../../components/Page';
-import Title from '../../components/Title';
+import Input from '../../components/inputs/Input';
+import Button from '../../components/inputs/Button';
+import Page from '../../components/page/Page';
+import Title from '../../components/typography/Title';
 
 const schema = yup.object().shape({
   username: yup.string().required('Enter your username or email'),
@@ -49,7 +49,7 @@ const LoginPage = () => {
 
       <Title>Holidaze admin login</Title>
 
-      <form className={styles.Form} onSubmit={handleSubmit(onSubmit)}>
+      <form className={styles.LoginForm} onSubmit={handleSubmit(onSubmit)}>
         <Input
           title="Username"
           placeholder="Username"

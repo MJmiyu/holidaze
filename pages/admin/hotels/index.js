@@ -1,18 +1,18 @@
 import styles from '../../../styles/admin/Hotels.module.css';
 import useSWR from 'swr';
-import { HolidazeAdminHead } from '../../../components/Head';
-import AdminNav from '../../../components/AdminNav';
-import Loading from '../../../components/Loading';
-import NextLink from '../../../components/NextLink';
+import { HolidazeAdminHead } from '../../../components/page/Head';
+import AdminNav from '../../../components/page/AdminNav';
+import Loading from '../../../components/page/Loading';
+import NextLink from '../../../components/typography/NextLink';
 import { useAuthAPI } from '../../../util/AuthAPIContext';
-import Page from '../../../components/Page';
-import Title from '../../../components/Title';
+import Page from '../../../components/page/Page';
+import Title from '../../../components/typography/Title';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import Paragraph from '../../../components/Paragraph';
-import Stars from '../../../components/Stars';
-import Button from '../../../components/Button';
-import SubTitle from '../../../components/SubTitle';
+import Paragraph from '../../../components/typography/Paragraph';
+import Stars from '../../../components/page/Stars';
+import Button from '../../../components/inputs/Button';
+import SubTitle from '../../../components/typography/SubTitle';
 import { useCallback } from 'react';
 import { useRouter } from 'next/router';
 

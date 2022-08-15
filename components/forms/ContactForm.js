@@ -3,10 +3,10 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useCallback, useState } from 'react';
 import styles from './ContactForm.module.css';
-import { useAPI } from '../util/APIContext';
-import Input from './Input';
-import Button from './Button';
-import Textarea from './Textarea';
+import { useAPI } from '../../util/APIContext';
+import Input from '../inputs/Input';
+import Button from '../inputs/Button';
+import Textarea from '../inputs/Textarea';
 
 const schema = yup.object().shape({
   name: yup.string().required('Enter your name here'),

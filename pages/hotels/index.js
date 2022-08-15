@@ -1,16 +1,16 @@
 import styles from '../../styles/Hotels.module.css';
 import useSWR from 'swr';
 import { useAPI } from '../../util/APIContext';
-import { HolidazeHead } from '../../components/Head';
-import Nav from '../../components/Nav';
-import Loading from '../../components/Loading';
-import NextLink from '../../components/NextLink';
-import Page from '../../components/Page';
-import Title from '../../components/Title';
-import SubTitle from '../../components/SubTitle';
-import Stars from '../../components/Stars';
-import Paragraph from '../../components/Paragraph';
-import HotelImage from '../../components/HotelImage';
+import { HolidazeHead } from '../../components/page/Head';
+import Nav from '../../components/page/Nav';
+import Loading from '../../components/page/Loading';
+import NextLink from '../../components/typography/NextLink';
+import Page from '../../components/page/Page';
+import Title from '../../components/typography/Title';
+import SubTitle from '../../components/typography/SubTitle';
+import Stars from '../../components/page/Stars';
+import Paragraph from '../../components/typography/Paragraph';
+import HotelImage from '../../components/page/HotelImage';
 
 const Hotels = () => {
   const { get } = useAPI();

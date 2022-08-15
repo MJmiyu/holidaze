@@ -1,9 +1,8 @@
-import HotelForm from '../../../components/HotelForm';
-import { HolidazeAdminHead } from '../../../components/Head';
-import styles from '../../../styles/admin/Hotel.module.css';
-import AdminNav from '../../../components/AdminNav';
-import Page from '../../../components/Page';
-import Title from '../../../components/Title';
+import HotelForm from '../../../components/forms/HotelForm';
+import { HolidazeAdminHead } from '../../../components/page/Head';
+import AdminNav from '../../../components/page/AdminNav';
+import Page from '../../../components/page/Page';
+import Title from '../../../components/typography/Title';
 
 const CreateHotel = () => {
   return (

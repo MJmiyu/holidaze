@@ -1,5 +1,5 @@
 import styles from './Nav.module.css';
-import NextLink from './NextLink';
+import NextLink from '../typography/NextLink';
 import Search from './Search';
 
 const Nav = () => {

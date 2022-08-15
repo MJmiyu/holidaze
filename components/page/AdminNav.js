@@ -1,6 +1,6 @@
-import { useAuthAPI } from '../util/AuthAPIContext';
+import { useAuthAPI } from '../../util/AuthAPIContext';
 import styles from './Nav.module.css';
-import NextLink from './NextLink';
+import NextLink from '../typography/NextLink';
 
 const AdminNav = () => {
   const { logout } = useAuthAPI();

@@ -3,10 +3,10 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useCallback, useMemo, useState } from 'react';
 import styles from './BookHotelForm.module.css';
-import { useAPI } from '../util/APIContext';
+import { useAPI } from '../../util/APIContext';
 import { format, addDays, differenceInDays, isAfter } from 'date-fns';
-import Input from './Input';
-import Button from './Button';
+import Input from '../inputs/Input';
+import Button from '../inputs/Button';
 
 const schema = yup.object().shape({
   email: yup

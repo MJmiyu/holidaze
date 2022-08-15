@@ -1,9 +1,8 @@
-import styles from '../styles/Contact.module.css';
-import Nav from '../components/Nav';
-import ContactForm from '../components/ContactForm';
-import { HolidazeHead } from '../components/Head';
-import Title from '../components/Title';
-import Page from '../components/Page';
+import Nav from '../components/page/Nav';
+import ContactForm from '../components/forms/ContactForm';
+import { HolidazeHead } from '../components/page/Head';
+import Title from '../components/typography/Title';
+import Page from '../components/page/Page';
 
 const Contact = () => {
   return (

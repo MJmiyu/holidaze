@@ -1,22 +1,22 @@
 import { useRouter } from 'next/router';
 import styles from '../../styles/Hotel.module.css';
-import Nav from '../../components/Nav';
+import Nav from '../../components/page/Nav';
 import useSWR from 'swr';
-import { HolidazeHead } from '../../components/Head';
+import { HolidazeHead } from '../../components/page/Head';
 import { useAPI } from '../../util/APIContext';
 import { useCallback, useState } from 'react';
-import BookHotelForm from '../../components/BookHotelForm';
-import Loading from '../../components/Loading';
-import Button from '../../components/Button';
-import Page from '../../components/Page';
-import Title from '../../components/Title';
-import Modal from '../../components/Modal';
-import Stars from '../../components/Stars';
-import Paragraph from '../../components/Paragraph';
+import BookHotelForm from '../../components/forms/BookHotelForm';
+import Loading from '../../components/page/Loading';
+import Button from '../../components/inputs/Button';
+import Page from '../../components/page/Page';
+import Title from '../../components/typography/Title';
+import Modal from '../../components/page/Modal';
+import Stars from '../../components/page/Stars';
+import Paragraph from '../../components/typography/Paragraph';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
-import HotelImage from '../../components/HotelImage';
-import Notification from '../../components/Notification';
+import HotelImage from '../../components/page/HotelImage';
+import Notification from '../../components/page/Notification';
 
 const Hotel = () => {
   const [showModal, setShowModal] = useState(false);

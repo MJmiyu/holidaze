@@ -3,13 +3,13 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useCallback, useState } from 'react';
 import styles from './HotelForm.module.css';
-import { useAuthAPI } from '../util/AuthAPIContext';
+import { useAuthAPI } from '../../util/AuthAPIContext';
 import { useRouter } from 'next/router';
-import UploadImage from './UploadImage';
-import Input from './Input';
-import Button from './Button';
-import Textarea from './Textarea';
-import Notification from './Notification';
+import UploadImage from '../inputs/UploadImage';
+import Input from '../inputs/Input';
+import Button from '../inputs/Button';
+import Textarea from '../inputs/Textarea';
+import Notification from '../page/Notification';
 
 const schema = yup.object().shape({
   name: yup.string().required('Enter the hotel name'),

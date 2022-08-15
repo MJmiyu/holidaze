@@ -1,13 +1,12 @@
 import { useRouter } from 'next/router';
-import styles from '../../../styles/admin/Hotel.module.css';
 import useSWR from 'swr';
-import { HolidazeAdminHead } from '../../../components/Head';
-import HotelForm from '../../../components/HotelForm';
-import AdminNav from '../../../components/AdminNav';
-import Loading from '../../../components/Loading';
+import { HolidazeAdminHead } from '../../../components/page/Head';
+import HotelForm from '../../../components/forms/HotelForm';
+import AdminNav from '../../../components/page/AdminNav';
+import Loading from '../../../components/page/Loading';
 import { useAuthAPI } from '../../../util/AuthAPIContext';
-import Page from '../../../components/Page';
-import Title from '../../../components/Title';
+import Page from '../../../components/page/Page';
+import Title from '../../../components/typography/Title';
 
 const EditHotel = () => {
   const router = useRouter();

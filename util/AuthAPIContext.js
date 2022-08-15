@@ -1,11 +1,5 @@
 import { useRouter } from 'next/router';
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from 'react';
+import { createContext, useCallback, useContext, useState } from 'react';
 import { STRAPI_API_URL, STRAPI_PARAMS } from '../constants/strapi';
 import { isLocal } from './isLocal';
 import urlJoin from 'url-join';
