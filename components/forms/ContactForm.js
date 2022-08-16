@@ -7,6 +7,7 @@ import { useAPI } from '../../util/APIContext';
 import Input from '../inputs/Input';
 import Button from '../inputs/Button';
 import Textarea from '../inputs/Textarea';
+import Notification from '../page/Notification';
 
 const schema = yup.object().shape({
   name: yup.string().required('Enter your name here'),
@@ -19,6 +20,7 @@ const schema = yup.object().shape({
 });
 
 const ContactForm = () => {
+  const [notification, setNotification] = useState();
   const [submitting, setSubmitting] = useState(false);
 
   const {
@@ -43,10 +45,11 @@ const ContactForm = () => {
       const result = await post('messages', data);
 
       if (!result) {
-        console.error('Failed sending messages');
+        setNotification({ type: 'error', message: 'Failed to send message' });
       } else {
+        setNotification({ message: 'Message sent' });
+
         reset();
-        console.log('Add toast');
       }
 
       setSubmitting(false);
@@ -87,6 +90,13 @@ const ContactForm = () => {
 
         <Button>Submit</Button>
       </form>
+
+      {notification && (
+        <Notification
+          notification={notification}
+          onClose={() => setNotification(null)}
+        />
+      )}
     </>
   );
 };
