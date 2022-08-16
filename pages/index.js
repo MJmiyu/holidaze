@@ -4,6 +4,7 @@ import Title from '../components/typography/Title';
 import Paragraph from '../components/typography/Paragraph';
 import Page from '../components/page/Page';
 import HotelImage from '../components/page/HotelImage';
+import Footer from '../components/page/Footer';
 
 const Home = () => {
   return (
@@ -44,6 +45,8 @@ const Home = () => {
           vidart
         </a>
       </Paragraph>
+
+      <Footer />
     </Page>
   );
 };

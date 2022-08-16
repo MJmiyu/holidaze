@@ -17,6 +17,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import HotelImage from '../../components/page/HotelImage';
 import Notification from '../../components/page/Notification';
+import Footer from '../../components/page/Footer';
 
 const Hotel = () => {
   const [showModal, setShowModal] = useState(false);
@@ -114,6 +115,8 @@ const Hotel = () => {
           onClose={() => setNotification(null)}
         />
       )}
+
+      <Footer />
     </Page>
   );
 };

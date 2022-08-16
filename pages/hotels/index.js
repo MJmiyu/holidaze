@@ -11,6 +11,7 @@ import SubTitle from '../../components/typography/SubTitle';
 import Stars from '../../components/page/Stars';
 import Paragraph from '../../components/typography/Paragraph';
 import HotelImage from '../../components/page/HotelImage';
+import Footer from '../../components/page/Footer';
 
 const Hotels = () => {
   const { get } = useAPI();
@@ -77,6 +78,8 @@ const Hotels = () => {
           );
         })}
       </div>
+
+      <Footer />
     </Page>
   );
 };

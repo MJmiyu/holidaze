@@ -4,12 +4,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 25px;
   gap: 15px;
 }
 
 @media only screen and (max-width: 600px) {
   .Page {
-    padding: 0 25px 25px;
+    padding: 0 25px;
   }
 }
